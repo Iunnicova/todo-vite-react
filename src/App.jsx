@@ -1,16 +1,12 @@
 //! списки и метод mep учимся рендерить массивы в разметке
 // пробегаемся по массиву mep и возвращаем новый массив
 const App = () => {
-
   return (
-      <div className="todo">
+    <div className="todo">
       <h1 className="todo__title">To Do List</h1>
       <form className="todo__form">
         <div className="todo__field field">
-          <label
-            className="field__label"
-            htmlFor="new-task"
-          >
+          <label className="field__label" htmlFor="new-task">
             New task
           </label>
           <input
@@ -20,14 +16,14 @@ const App = () => {
             autoComplete="off"
           />
         </div>
-        <button className="button" type="submit">Add</button>
+        <button className="button" type="submit">
+          Add
+        </button>
       </form>
+
       <form className="todo__form">
         <div className="todo__field field">
-          <label
-            className="field__label"
-            htmlFor="search-task"
-          >
+          <label className="field__label" htmlFor="search-task">
             Search task
           </label>
           <input
@@ -39,11 +35,17 @@ const App = () => {
           />
         </div>
       </form>
+
       <div className="todo__info">
-        <div className="todo__total-tasks">Total tasks: <span>0</span></div>
-        <button className="todo__delete-all-button" type="button">Delete all</button>
+        <div className="todo__total-tasks">
+          Total tasks: <span>0</span>
+        </div>
+        <button className="todo__delete-all-button" type="button">
+          Delete all
+        </button>
       </div>
-      <ul className="todo__list">
+
+      {/* <ul className="todo__list">
         <li className="todo__item todo-item">
           <input
             className="todo-item__checkbox"
@@ -113,11 +115,12 @@ const App = () => {
             </svg>
           </button>
         </li>
-      </ul>
-      <div className="todo__empty-message"></div>
+      </ul> */}
+
+      {/* <div className="todo__empty-message"></div> */}
     </div>
-  )
-}
+  );
+};
 export default App;
 
 //! списки и метод mep учимся рендерить массивы в разметке
@@ -139,7 +142,6 @@ export default App;
 //   )
 // }
 // export default App;
-
 
 //! вариант через if else
 // const userName = 'Валентина'
@@ -176,7 +178,7 @@ export default App;
 //     <div>
 //       <h1 className='title'>To Do-vite-react</h1>
 // {/* выводим число */}
-//  <p>{new Date().toLocaleDateString()}</p> 
+//  <p>{new Date().toLocaleDateString()}</p>
 
 //       {/* 1 оператор && - если isLoggedIn true выводим Валентина иначе ничего*/}
 //       {isLoggedIn && <p>Меня зовут, {userName}!</p>}
@@ -186,7 +188,7 @@ export default App;
 
 //       {/* 3  или Валя или кнопка*/}
 //       {isLoggedIn ? <p>Меня зовут,{userName.toUpperCase()}! </p> : <button>авторизоваться</button>}
-    
+
 //     <hr />
 //     <label htmlFor="email">Email:</label>
 //     <input id="email" type="email" required />
