@@ -1,10 +1,10 @@
 .todo {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /*элементы идут вертикально виде колонки с отступом 24px*/
   row-gap: 24px;
-  width: 100%;
-  max-width: 404px;
-  min-height: 429px;
+  width: 100%; /*занимает всю доступную ширину*/
+  max-width: 404px; /*ограничение ширины*/
+  min-height: 429px; /*минимальная высота*/
   padding: 24px;
   background-color: var(--color-white);
   border: var(--border);
@@ -16,35 +16,37 @@
   text-align: center;
   font-size: 24px;
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.2; /*расстояние между линиями соседних строк текста*/
 }
 
 .todo__form {
   display: flex;
-  column-gap: 16px;
+  column-gap: 16px; /*Горизонтальное расположение элементов с отступом между ними*/
 }
 
 .todo__field {
-  width: 100%;
+  width: 100%; /*Поле ввода занимает всю доступную ширину*/
 }
 
 .todo__info {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  column-gap: 16px;
+  justify-content: space-between; /*Элементы распределены по краям*/
+  align-items: center; /*выровнены по центру вертикально*/
+  column-gap: 16px; /*Горизонтальное расположение элементов с отступом между ними*/
   font-weight: 600;
 }
 
+/* !Кнопка 'Удалить всё' */
 .todo__delete-all-button {
   padding: 0;
-  background-color: transparent;
+  background-color: transparent; /*Без рамки и фона, выглядит как текст*/
   border: none;
 
   &:hover {
-    color: var(--color-gray-4);
+    color: var(--color-gray-4); /*При наведении меняет цвет*/
   }
 
+  /* Если нет класса .is-visible, скрывается (opacity: 0; visibility: hidden) */
   &:not(.is-visible) {
     opacity: 0;
     visibility: hidden;
@@ -54,7 +56,7 @@
 .todo__list,
 .todo__empty-message {
   &:empty {
-    display: none;
+    display: none; /* Если список или сообщение пустые (:empty), они не отображаются */
   }
 }
 
