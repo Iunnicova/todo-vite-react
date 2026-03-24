@@ -1,5 +1,7 @@
 .field {
-  position: relative;
+  position: relative;  /*контейнер .field становится позиционированным*/
+
+/* &:has(.field__input:not(:placeholder-shown)) .field__label — современный селектор :has() проверяет: если внутри .field есть .field__input, у которого placeholder скрыт (значит пользователь что-то ввёл), то применяются стили к .field__label. В этом случае метка (label) меняет цвет на чёрный, уменьшается (scale: 0.7) и сдвигается вверх/влево (translate: -1.75em -2.6em). Это эффект «плавающего label» — когда текст метки уходит наверх при вводе*/
 
   &:has(.field__input:not(:placeholder-shown)) .field__label {
     color: var(--color-black);
@@ -9,7 +11,7 @@
 }
 
 .field__label {
-  position: absolute;
+  position: absolute;    /*Метка позиционируется абсолютно внутри .field*/
   top: 50%;
   left: 17px;
   color: var(--color-gray-3);
@@ -34,8 +36,14 @@
 
   &:focus {
     background-color: var(--color-gray-1);
-    outline: none;
+    outline: none;   /*При фокусе фон слегка подсвечивается, убирается стандартный outline.*/
   }
+
+/* поле поиска (type="search") и placeholder виден (значит пользователь ещё ничего не ввёл):
+Добавляется отступ справа, чтобы освободить место для иконки.
+Вставляется иконка поиска как фон.
+Иконка позиционируется справа по центру.
+Размер иконки равен переменной --fieldSeachInputIconSize. */
 
   &[type="search"] {
     &:placeholder-shown {
