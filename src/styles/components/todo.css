@@ -38,18 +38,18 @@
 
 /* !Кнопка 'Удалить всё' */
 .todo__delete-all-button {
-  padding: 0;
-  background-color: transparent; /*Без рамки и фона, выглядит как текст*/
-  border: none;
+  padding: 0; /*убираем внутринние отступы*/
+  background-color: transparent; /*прозрачный фон*/
+  border: none; /*убираем рамку*/
 
   &:hover {
     color: var(--color-gray-4); /*При наведении меняет цвет*/
   }
 
-  /* Если нет класса .is-visible, скрывается (opacity: 0; visibility: hidden) */
+  /* Если нет класса .is-visible, скрываем кнопку */
   &:not(.is-visible) {
-    opacity: 0;
-    visibility: hidden;
+    opacity: 0; /*делаем прозрачной*/
+    visibility: hidden; /*полностью скрываем из потока*/
   }
 }
 
@@ -61,10 +61,10 @@
 }
 
 .todo__list {
-  --todoListRowGap: 8px;
+  --todoListRowGap: 8px; /* расстояние между элементами */
 
   display: grid;
-  row-gap: var(--todoListRowGap);
+  row-gap: var(--todoListRowGap); /*отступ между строками*/
 }
 
 .todo__empty-message {

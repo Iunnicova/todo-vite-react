@@ -9,12 +9,7 @@ const App = () => {
           <label className="field__label" htmlFor="new-task">
             New task
           </label>
-          <input
-            className="field__input"
-            id="new-task"
-            placeholder=" "
-            autoComplete="off"
-          />
+          <input className="field__input" id="new-task" placeholder=" " autoComplete="off" />
         </div>
         <button className="button" type="submit">
           Add
@@ -45,25 +40,13 @@ const App = () => {
         </button>
       </div>
 
-      {/* <ul className="todo__list">
+      <ul className="todo__list">
         <li className="todo__item todo-item">
-          <input
-            className="todo-item__checkbox"
-            id="task-1"
-            type="checkbox"
-            checked
-          />
-          <label
-            className="todo-item__label"
-            htmlFor="task-1"
-          >
+          <input className="todo-item__checkbox" id="task-1" type="checkbox" checked />
+          <label className="todo-item__label" htmlFor="task-1">
             Task 1
           </label>
-          <button
-            className="todo-item__delete-button"
-            aria-label="Delete"
-            title="Delete"
-          >
+          <button className="todo-item__delete-button" aria-label="Delete" title="Delete">
             <svg
               width="20"
               height="20"
@@ -82,22 +65,11 @@ const App = () => {
           </button>
         </li>
         <li className="todo__item todo-item">
-          <input
-            className="todo-item__checkbox"
-            id="task-2"
-            type="checkbox"
-          />
-          <label
-            className="todo-item__label"
-            htmlFor="task-2"
-          >
+          <input className="todo-item__checkbox" id="task-2" type="checkbox" />
+          <label className="todo-item__label" htmlFor="task-2">
             Task 2
           </label>
-          <button
-            className="todo-item__delete-button"
-            aria-label="Delete"
-            title="Delete"
-          >
+          <button className="todo-item__delete-button" aria-label="Delete" title="Delete">
             <svg
               width="20"
               height="20"
@@ -115,9 +87,9 @@ const App = () => {
             </svg>
           </button>
         </li>
-      </ul> */}
+      </ul>
 
-      {/* <div className="todo__empty-message"></div> */}
+      <div className="todo__empty-message"></div>
     </div>
   );
 };

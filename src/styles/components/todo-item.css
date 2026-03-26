@@ -1,0 +1,109 @@
+.todo-item {
+  display: flex; /* делаем элементы в строку (checkbox + текст + кнопка) */
+  align-items: center; /*выравниваем по вертикали по центру*/
+  column-gap: 12px;
+  padding-left: 10px;
+  border: var(--border);
+  border-radius: var(--border-radius);
+
+  &:hover {
+    background-color: var(--color-gray-1);
+  }
+
+  /*состояние "исчезает" (анимация удаления)*/
+  &.is-disappearing {
+    opacity: 0; /*становится прозрачным*/
+    translate: 0 -75%; /*уезжает вверх*/
+    transition-duration: calc(var(--transition-duration) * 2); /*анимация дольше*/
+    pointer-events: none; /*нельзя кликать*/
+
+    /* ~ все элементы ниже этого они поднимаются вверх, чтобы занять место удалённого элемента удаляешь задачу → она исчезает
+остальные плавно "подъезжают" вверх*/
+    & ~ .todo-item {
+      translate: 0 calc((100% + var(--todoListRowGap)) * -1);
+      transition-delay: var(--transition-duration);
+      transition-duration: var(--transition-duration);
+      pointer-events: none;
+    }
+  }
+}
+
+/*кастомный чекбокс*/
+.todo-item__checkbox {
+  flex-shrink: 0; /*не сжимается*/
+  appearance: none; /*убираем стандартный стиль браузера*/
+  position: relative;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  border: 1px solid var(--color-gray-4);
+  border-radius: 4px;
+
+  /*когда чекбокс отмечен*/
+  &:checked {
+    background-color: var(--color-dark-2); /*заливается цветом*/
+    border-color: var(--color-dark-2);
+
+    /*влияет на текст*/
+    & + .todo-item__label {
+      color: var(--color-gray-4); /*текст меняет цвет*/
+      text-decoration: line-through; /*зачеркивается*/
+    }
+  }
+
+  /*когда не отмечер скрываем галочку*/
+  &:not(:checked) {
+    &::after {
+      opacity: 0; /*скрываем галочку*/
+    }
+  }
+
+  /*галочка*/
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%; /*центрируем*/
+    width: 16px;
+    height: 16px;
+    background: url('../../assets/icons/icon-check_white.svg') center/contain no-repeat;
+  }
+}
+
+/*текст задачи*/
+.todo-item__label {
+  width: 100%; /*занимает всё доступное место*/
+  pointer-events: none; /*нельзя кликнуть (чтобы не мешал checkbox)*/
+}
+
+/*кнопка удаления*/
+.todo-item__delete-button {
+  flex-shrink: 0; /*не сжимается*/
+  display: inline-flex;
+  justify-content: center; /*центр по горизонтали*/
+  align-items: center; /*центр по вертикали*/
+  width: 44px;
+  height: 44px;
+  margin-left: auto; /*уезжает в право*/
+  padding: 0;
+  color: var(--color-gray-4);
+  background-color: transparent;
+  border: none;
+  border-radius: inherit;
+
+  &:hover {
+    color: var(--color-white);
+    background-color: var(--color-dark-1);
+  }
+
+  /*эфект клика*/
+  &:active {
+    scale: 1.05; /*екиного увеличивается*/
+  }
+
+  /*что бы клики шли на кнопку, а не на иконку*/
+  * {
+    pointer-events: none;
+  }
+}

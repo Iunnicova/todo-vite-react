@@ -1,13 +1,7 @@
-import styles from './Button.module.scss'
+import styles from './Button.module.scss';
 
 const Button = (props) => {
-  const {
-    className = '',
-    type = 'button',
-    children,
-    isDisabled,
-    onClick,
-  } = props
+  const { className = '', type = 'button', children, isDisabled, onClick } = props;
 
   return (
     <button
@@ -18,7 +12,7 @@ const Button = (props) => {
     >
       {children}
     </button>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;
