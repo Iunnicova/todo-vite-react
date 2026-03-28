@@ -4,7 +4,7 @@ import './variables.css';
 import './utils.css';
 import './globals.css';
 
-import './components/button.css';
-import './components/todo.css';
-import './components/field.css';
-import './components/todo-item.css';
+import './button.css';
+import './todo.css';
+import './field.css';
+import './todo-item.css';
