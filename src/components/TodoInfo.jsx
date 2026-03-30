@@ -1,15 +1,28 @@
-export const TodoInfo = () => {
+// Общее колисество задач и кнопка удалить
+// Сколько задач из скольки сделано
+
+export const TodoInfo = (props) => {
+  const { total, done } = props;
+
+  //! для кнопки если больше нуля кнопка появляется
+  const hasTasks = total > 0;
+
   return (
     <div className="todo__info">
       <div className="todo__total-tasks">
-        Total tasks: <span>0</span>
+        {/* Количество задач: 
+        <span> 0</span> */}
+        Сделано {done} из {total}
       </div>
-      <button
-        className="todo__delete-all-button"
-        type="button"
-      >
-        Delete all
-      </button>
+      {/* Кнопку будет появлятся только если есть задачи */}
+      {hasTasks && (
+        <button
+          className="todo__delete-all-button"
+          type="button"
+        >
+          Удалить все
+        </button>
+      )}
     </div>
   );
 };

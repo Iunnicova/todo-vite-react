@@ -1,7 +1,10 @@
 // Поле новая задача
 import { TodoItem } from './TodoItem';
 
-export const TodoList = () => {
+export const TodoList = (props) => {
+  //! делаем тодоЛист динамическим будет принимать массив задачи через пропсы и рендерить на основе этих данных
+  const { tasks = [] } = props;
+
   const hasTask = true; //заглушка вспомогательная переменная
 
   // если нет задач отображается todo__empty-message
@@ -12,19 +15,18 @@ export const TodoList = () => {
   }
 
   return (
+    //! проходимся по массиву из Todo и возвращаем список задач
     <ul className="todo__list">
-      <TodoItem
-        className="todo__item"
-        id="Задача-1"
-        title="купить молоко"
-        isDone={false}
-      />
-      <TodoItem
-        className="todo__item"
-        id="Задача-2"
-        title="Покормить кота"
-        isDone
-      />
+      {tasks.map((task) => (
+        <TodoItem
+          className="todo__item"
+          // id={task.id}
+          // title={task.title}
+          // isDone={task.isDone}
+          key={task.id} // обязательно уникальный key
+          {...task} //а можно и так не перечисляя все пропсы используем спред он разворачивает все пропсы
+        />
+      ))}
     </ul>
   );
 };
