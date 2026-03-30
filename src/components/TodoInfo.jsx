@@ -4,7 +4,10 @@ export const TodoInfo = () => {
       <div className="todo__total-tasks">
         Total tasks: <span>0</span>
       </div>
-      <button className="todo__delete-all-button" type="button">
+      <button
+        className="todo__delete-all-button"
+        type="button"
+      >
         Delete all
       </button>
     </div>

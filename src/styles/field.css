@@ -3,7 +3,8 @@
 
   /* если внутри есть input и он НЕ пустой → двигаем label */
 
-  &:has(.field__input:not(:placeholder-shown)) .field__label {
+  &:has(.field__input:not(:placeholder-shown))
+    .field__label {
     color: var(--color-black);
     scale: 0.7; /* уменьшаем label */
     translate: -1.75em -2.6em; /* сдвигаем вверх (эффект floating label) */
@@ -23,15 +24,21 @@
   --fieldSeachInputIconSize: 16px; /* размер иконки поиска */
 
   width: 100%; /* на всю ширину */
-  height: var(--input-height); /* переменная высота инпута */
-  padding-inline: var(--fieldInputPaddingX); /* переменная отступы слева/справа */
+  height: var(
+    --input-height
+  ); /* переменная высота инпута */
+  padding-inline: var(
+    --fieldInputPaddingX
+  ); /* переменная отступы слева/справа */
   background-color: transparent; /*прозрачный фон*/
   border: var(--border);
   border-radius: var(--border-radius);
 
   &:hover,
   &:focus {
-    border-color: var(--color-dark-2); /* при наведении и фокусе темнее рамка */
+    border-color: var(
+      --color-dark-2
+    ); /* при наведении и фокусе темнее рамка */
   }
 
   &:focus {
@@ -44,11 +51,17 @@
     /* если поле пустое (placeholder виден) */
     &:placeholder-shown {
       padding-right: calc(
-        var(--fieldInputPaddingX) * 2 + var(--fieldSeachInputIconSize)
+        var(--fieldInputPaddingX) * 2 +
+          var(--fieldSeachInputIconSize)
       ); /* увеличиваем отступ справа под иконку */
       background-image: url('../../assets/icons/icon-search_black.svg');
-      background-position: calc(100% - var(--fieldInputPaddingX)) 50%; /* справа по центру */
-      background-size: var(--fieldSeachInputIconSize); /* переменная размер иконки */
+      background-position: calc(
+          100% - var(--fieldInputPaddingX)
+        )
+        50%; /* справа по центру */
+      background-size: var(
+        --fieldSeachInputIconSize
+      ); /* переменная размер иконки */
       background-repeat: no-repeat; /*не повторяется*/
     }
   }

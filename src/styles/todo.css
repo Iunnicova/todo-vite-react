@@ -43,7 +43,9 @@
   border: none; /*убираем рамку*/
 
   &:hover {
-    color: var(--color-gray-4); /*При наведении меняет цвет*/
+    color: var(
+      --color-gray-4
+    ); /*При наведении меняет цвет*/
   }
 
   /* Если нет класса .is-visible, скрываем кнопку */
@@ -64,7 +66,9 @@
   --todoListRowGap: 8px; /* расстояние между элементами */
 
   display: grid;
-  row-gap: var(--todoListRowGap); /*отступ между строками*/
+  row-gap: var(
+    --todoListRowGap
+  ); /*отступ между строками*/
 }
 
 .todo__empty-message {
