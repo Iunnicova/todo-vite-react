@@ -1,4 +1,4 @@
-// Поле новая задача
+// Поля сейчас это новая задача и поиск задач
 export const Field = (props) => {
   const {
     className = '',

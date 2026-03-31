@@ -2,7 +2,11 @@
 // Сколько задач из скольки сделано
 
 export const TodoInfo = (props) => {
-  const { total, done } = props;
+  const { 
+    total, 
+    done,
+    onDeleteAllButtonClick,  //объявили в todo
+  } = props;
 
   //! для кнопки если больше нуля кнопка появляется
   const hasTasks = total > 0;
@@ -19,6 +23,7 @@ export const TodoInfo = (props) => {
         <button
           className="todo__delete-all-button"
           type="button"
+          onClick={onDeleteAllButtonClick}
         >
           Удалить все
         </button>
