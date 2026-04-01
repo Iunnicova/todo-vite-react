@@ -32,13 +32,30 @@ const toggleTaskComplete = (taskId, isDone) => {
   console.log(`Задча ${taskId} ${isDone ? 'Выполнена' : 'Не выполнена'}`)
 }
 
+//поле поиска
+const filterTasks = (query) => {
+  console.log(`Поиск: ${query}`)
+}
+
+//! отправка при нажатии на ENTER
+// добавление новой задачи + кнопка
+const addTask = () => {
+  console.log('Задача добавлена')
+}
+
+// поиск задачи
+
   return (
     <div className="todo">
       <h1 className="todo__title">
         Список дел, которые нужно сделать
       </h1>
-      <AddTaskForm />
-      <SearchTaskForm />
+      <AddTaskForm 
+      addTask={addTask}
+      />
+      <SearchTaskForm 
+      onSearchInput={filterTasks}
+      />
       <TodoInfo
         total={tasks.length} //всего колличество задач
         done={
