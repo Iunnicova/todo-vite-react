@@ -6,6 +6,8 @@ import { Button } from './Button';
 export const AddTaskForm = (props) => {
 const {
 addTask,
+newTaskTitle,   //useState добавление задачи
+setNewTaskTitle,  //useState добавление задачи
 } = props
 
 const onSubmit = (event) => {
@@ -22,6 +24,8 @@ const onSubmit = (event) => {
         className="todo__field"
         label="Новая задача"
         id="new-task"
+        value={newTaskTitle}    //useState добавление задачи
+        onInput={(event) => setNewTaskTitle(event.target.value)}   //useState добавление задачи
       />
       <Button type="submit">Добавить</Button>
     </form>

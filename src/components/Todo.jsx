@@ -1,13 +1,14 @@
 //выводит все компоненты
-
+import { useState } from 'react'
 import { AddTaskForm } from './AddTaskForm';
 import { SearchTaskForm } from './SearchTaskForm';
 import { TodoInfo } from './TodoInfo';
 import { TodoList } from './TodoList';
 
 export const Todo = () => {
-  // временный массив задач статический
-  const tasks = [
+  
+  const [tasks, setTasks] = useState(
+    [
     {
       id: 'Задача-1',
       title: 'Купить молоко',
@@ -18,8 +19,12 @@ export const Todo = () => {
       title: 'Покормить кошку',
       isDone: true,
     },
-  ];
+  ])
 
+  //добавляем задачи в список
+const [newTaskTitle, setNewTaskTitle] = useState('')
+
+  //!проверяем работу кнопок до использования useState
 const deleteAllTasks = () => {
   console.log('удалить все задачи')
 }
@@ -37,13 +42,32 @@ const filterTasks = (query) => {
   console.log(`Поиск: ${query}`)
 }
 
-//! отправка при нажатии на ENTER
-// добавление новой задачи + кнопка
-const addTask = () => {
-  console.log('Задача добавлена')
-}
+//! новая задача и добавлялась при нажатии на ENTER
+// console.log('Задача добавлена') 
+  // .trim() отрезает все пробелы в начале и в конце строки, что точно ввели текст
+  // length > 0 - Если длина больше 0, значит, там есть хотя бы одна буква или цифра. Значит, задача настоящая!
+//! crypto?.randomUUID()-генерирует супернадежный id   
+// Это современный стандарт. Функция генерирует очень длинную, случайную и уникальную строку (например, 123e4567-e89b-12d3-a456-426614174000).Вероятность дубля: Практически нулевая.
+//!    ? 
+//  (Optional Chaining): Это проверка. Если вдруг браузер старый и не знает, что такое crypto, код не выдаст ошибку, а просто вернет undefined и пойдет дальше.
+//!  Date.now().toString()  
+// Если crypto не сработал, мы берем способ который работает во всех браузерах
 
-// поиск задачи
+const addTask = () => {
+if (newTaskTitle.trim().length > 0) {
+  const newTask = {
+    id: crypto?.randomUUID() ?? Date.now().toString(),
+    title: newTaskTitle,
+    isDone: false,
+  }
+ 
+  // добавляем к старым задачам новую
+    setTasks([...tasks, newTask]); 
+    
+    // Очищаем поле ввода (как мы учили раньше)
+    setNewTaskTitle('');
+}
+}
 
   return (
     <div className="todo">
@@ -52,6 +76,8 @@ const addTask = () => {
       </h1>
       <AddTaskForm 
       addTask={addTask}
+      newTaskTitle={newTaskTitle}       //useState добавление задачи
+      setNewTaskTitle={setNewTaskTitle}  //useState перезаписываем добавление задачи
       />
       <SearchTaskForm 
       onSearchInput={filterTasks}

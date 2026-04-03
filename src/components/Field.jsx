@@ -6,6 +6,7 @@ export const Field = (props) => {
     label,
     type = 'text',
     onInput,
+    value,    //useState добавление задачи
   } = props;
 
   return (
@@ -23,6 +24,7 @@ export const Field = (props) => {
         placeholder=" "
         autoComplete="off"
         type={type}
+        value={value}   //useState добавление задачи
         onInput={onInput}
       />
     </div>
