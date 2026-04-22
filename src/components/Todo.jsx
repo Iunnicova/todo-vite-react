@@ -24,7 +24,7 @@ export const Todo = () => {
   const [newTaskTitle, setNewTaskTitle] =
     useState('');
 
-  //удалить все задачи
+  //!удалить все задачи
   const deleteAllTasks = () => {
     // console.log('удалить все задачи')
 
@@ -39,11 +39,14 @@ export const Todo = () => {
     }
   };
 
-  //удаляем одну задачу с id
+  //!удаляем одну задачу с id
   const deleteTasks = (tasksId) => {
-    console.log(
-      `удаляем задачу с id: ${tasksId}`
-    );
+    // console.log(
+    //   `удаляем задачу с id: ${tasksId}`
+    // );
+setTasks(
+  tasks.filter((task) => task.id !== tasksId)
+)
   };
 
   //сколько задач выполнено из скольки
