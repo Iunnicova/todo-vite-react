@@ -40,20 +40,32 @@ export const Todo = () => {
   };
 
   //!удаляем одну задачу с id
-  const deleteTasks = (tasksId) => {
+  const deleteTasks = (taskId) => {
     // console.log(
     //   `удаляем задачу с id: ${tasksId}`
     // );
 setTasks(
-  tasks.filter((task) => task.id !== tasksId)
+  tasks.filter((task) => task.id !== taskId)
 )
   };
 
-  //сколько задач выполнено из скольки
+  //!чекбокс задач и сколько задач выполнено из скольки
   const toggleTaskComplete = (taskId, isDone) => {
-    console.log(
-      `Задача ${taskId} ${isDone ? 'Выполнена' : 'Не выполнена'}`
-    );
+    // console.log(
+    //   `Задача ${taskId} ${isDone ? 'Выполнена' : 'Не выполнена'}`
+    // );
+
+    //* перебираем массив с помощью map 
+    setTasks(
+      tasks.map((task) => {
+        //* если id совпадает с переданным возвращаем новый объект задач в котором изменяем только поле is Dane
+        if(task.id === taskId) {
+          return {...task, isDone}
+        }
+        //* для всех остальных задач возвращает их без изменений
+        return task
+      })
+    )
   };
 
   //поле поиска
