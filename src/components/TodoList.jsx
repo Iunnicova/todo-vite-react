@@ -3,9 +3,9 @@ import { TodoItem } from './TodoItem';
 
 export const TodoList = (props) => {
   //! делаем тодоЛист динамическим будет принимать массив задачи через пропсы и рендерить на основе этих данных
-  const { 
+  const {
     tasks = [],
-    onDeleteTasksButtonClick, 
+    onDeleteTasksButtonClick,
     onTaskCompleteChange,
   } = props;
 
@@ -28,8 +28,12 @@ export const TodoList = (props) => {
           // title={task.title}
           // isDone={task.isDone}
           key={task.id} // обязательно уникальный key
-          onDeleteTasksButtonClick={onDeleteTasksButtonClick} //удаление задачи
-          onTaskCompleteChange={onTaskCompleteChange}   //удаление галочки
+          onDeleteTasksButtonClick={
+            onDeleteTasksButtonClick
+          } //удаление задачи
+          onTaskCompleteChange={
+            onTaskCompleteChange
+          } //удаление галочки
           {...task} //а можно и так не перечисляя все пропсы используем спред он разворачивает все пропсы
         />
       ))}

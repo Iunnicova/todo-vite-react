@@ -5,8 +5,8 @@ export const TodoItem = (props) => {
     id,
     title,
     isDone, //флаг выполнена задача или нет
-    onDeleteTasksButtonClick,  //удаление задачи
-    onTaskCompleteChange,      //добавление удаление галочки
+    onDeleteTasksButtonClick, //удаление задачи
+    onTaskCompleteChange, //добавление удаление галочки
   } = props;
 
   return (
@@ -17,9 +17,12 @@ export const TodoItem = (props) => {
         type="checkbox"
         checked={isDone}
         // readOnly //нельзя изменить текст в input
-        onChange={({target}) => {
-          onTaskCompleteChange(id, target.checked)
-        }}  //добавление удаление галочки
+        onChange={({ target }) => {
+          onTaskCompleteChange(
+            id,
+            target.checked
+          );
+        }} //добавление удаление галочки
       />
       <label
         className="todo-item__label"
@@ -32,7 +35,9 @@ export const TodoItem = (props) => {
         className="todo-item__delete-button"
         aria-label="Delete"
         title="Delete"
-        onClick={() => onDeleteTasksButtonClick(id)}
+        onClick={() =>
+          onDeleteTasksButtonClick(id)
+        }
       >
         <svg
           width="20"
