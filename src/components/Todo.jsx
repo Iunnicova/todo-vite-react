@@ -1,5 +1,5 @@
 //выводит все компоненты
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AddTaskForm } from './AddTaskForm';
 import { SearchTaskForm } from './SearchTaskForm';
 import { TodoInfo } from './TodoInfo';
@@ -7,18 +7,38 @@ import { TodoList } from './TodoList';
 
 export const Todo = () => {
   //обновляем список задач
-  const [tasks, setTasks] = useState([
-    {
-      id: 'Задача-1',
-      title: 'Купить молоко',
-      isDone: false,
-    },
-    {
-      id: 'Задача-2',
-      title: 'Покормить кошку',
-      isDone: true,
-    },
-  ]);
+  // const [tasks, setTasks] = useState([
+  //   {
+  //     id: 'Задача-1',
+  //     title: 'Купить молоко',
+  //     isDone: false,
+  //   },
+  //   {
+  //     id: 'Задача-2',
+  //     title: 'Покормить кошку',
+  //     isDone: true,
+  //   },
+  // ]);
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks =
+      localStorage.getItem('tasks');
+    if (savedTasks) {
+      return JSON.parse(savedTasks);
+    }
+
+    return [
+      {
+        id: 'Задача-1',
+        title: 'Купить молоко',
+        isDone: false,
+      },
+      {
+        id: 'Задача-2',
+        title: 'Покормить кошку',
+        isDone: true,
+      },
+    ];
+  });
 
   //добавляем задачи в список
   const [newTaskTitle, setNewTaskTitle] =
@@ -44,9 +64,9 @@ export const Todo = () => {
     // console.log(
     //   `удаляем задачу с id: ${tasksId}`
     // );
-setTasks(
-  tasks.filter((task) => task.id !== taskId)
-)
+    setTasks(
+      tasks.filter((task) => task.id !== taskId)
+    );
   };
 
   //!чекбокс задач и сколько задач выполнено из скольки
@@ -55,17 +75,17 @@ setTasks(
     //   `Задача ${taskId} ${isDone ? 'Выполнена' : 'Не выполнена'}`
     // );
 
-    //* перебираем массив с помощью map 
+    //* перебираем массив с помощью map
     setTasks(
       tasks.map((task) => {
         //* если id совпадает с переданным возвращаем новый объект задач в котором изменяем только поле is Dane
-        if(task.id === taskId) {
-          return {...task, isDone}
+        if (task.id === taskId) {
+          return { ...task, isDone };
         }
         //* для всех остальных задач возвращает их без изменений
-        return task
+        return task;
       })
-    )
+    );
   };
 
   //поле поиска
@@ -101,6 +121,15 @@ setTasks(
       setNewTaskTitle('');
     }
   };
+
+  //что бы при перезагрузки страницы задачи были на месте
+  useEffect(() => {
+    // console.log(' сохраняем данные в хранилище изменился tasks', tasks)
+    localStorage.setItem(
+      'tasks',
+      JSON.stringify(tasks)
+    ); //срабатывает каждый раз когда список задач меняется
+  }, [tasks]); //что бы следить за изменением нужного состояния
 
   return (
     <div className="todo">
