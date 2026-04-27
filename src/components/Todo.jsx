@@ -44,6 +44,10 @@ export const Todo = () => {
   const [newTaskTitle, setNewTaskTitle] =
     useState('');
 
+  //!Поиск задач
+  const [searchQuery, setSearchQuery] =
+    useState('');
+
   //!удалить все задачи
   const deleteAllTasks = () => {
     // console.log('удалить все задачи')
@@ -89,9 +93,9 @@ export const Todo = () => {
   };
 
   //поле поиска
-  const filterTasks = (query) => {
-    console.log(`Поиск: ${query}`);
-  };
+  // const filterTasks = (query) => {
+  //   console.log(`Поиск: ${query}`);
+  // };
 
   // ! новая задача и добавлялась при нажатии на ENTER
   // console.log('Задача добавлена')
@@ -131,6 +135,22 @@ export const Todo = () => {
     ); //срабатывает каждый раз когда список задач меняется
   }, [tasks]); //что бы следить за изменением нужного состояния
 
+  //!поиск
+  //trim() обрезаем с обеех сторон с пробелов приводим к нижнему регистру
+  const clearSearchQuery = searchQuery
+    .trim()
+    .toLowerCase();
+
+  //фильтруем если clearSearchQuery длина введенного значения больше 0 в таком случае обращаемся к tasks вызываем метод фильтер и в колбеке будет простая проверка структуируем заголовок задачи title возвращаем результат проверки, получим только те задачи у которых в title входит наш поисковый запрос без учета регистра второй строкой пишем null что бы когда длина чистого поискового запроса 0 символов в filteredTasks все обнулялось. Если поиск не активен (если в поле поиска пусто или только пробелы то в filteredTasks )
+  const filteredTasks =
+    clearSearchQuery.length > 0
+      ? tasks.filter(({ title }) =>
+          title
+            .toLowerCase()
+            .includes(clearSearchQuery)
+        )
+      : null;
+
   return (
     <div className="todo">
       <h1 className="todo__title">
@@ -142,7 +162,9 @@ export const Todo = () => {
         setNewTaskTitle={setNewTaskTitle} //useState перезаписываем добавление задачи
       />
       <SearchTaskForm
-        onSearchInput={filterTasks}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        // onSearchInput={filterTasks}
       />
       <TodoInfo
         total={tasks.length} //всего колличество задач
@@ -154,6 +176,7 @@ export const Todo = () => {
       />
       <TodoList
         tasks={tasks} //передаем дела
+        filteredTasks={filteredTasks} // поиск
         onDeleteTasksButtonClick={deleteTasks} //удаление задачи
         onTaskCompleteChange={toggleTaskComplete} //галочка добавить убрать
       />

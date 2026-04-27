@@ -5,6 +5,7 @@ export const TodoList = (props) => {
   //! делаем тодоЛист динамическим будет принимать массив задачи через пропсы и рендерить на основе этих данных
   const {
     tasks = [],
+    filteredTasks,
     onDeleteTasksButtonClick,
     onTaskCompleteChange,
   } = props;
@@ -21,7 +22,8 @@ export const TodoList = (props) => {
   return (
     //! проходимся по массиву из Todo и возвращаем список задач
     <ul className="todo__list">
-      {tasks.map((task) => (
+      {/* ПОИСК проверяем если filteredTasks не null то будем рендерить отфильтрованные задачи а в ином случае просто все задачи из стейт переменной tasks */}
+      {(filteredTasks ?? tasks).map((task) => (
         <TodoItem
           className="todo__item"
           // id={task.id}
