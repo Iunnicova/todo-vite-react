@@ -10,13 +10,22 @@ export const TodoList = (props) => {
     onTaskCompleteChange,
   } = props;
 
-  const hasTask = true; //заглушка вспомогательная переменная
+  //!поиск
+  //*Пока нет никаких заданий
+  const hasTask = tasks.length > 0
+  //* Задачи не найдены
+  const isEmptyFilteredTasks = filteredTasks?.length === 0
 
   // если нет задач отображается todo__empty-message
   if (!hasTask) {
     return (
-      <div className="todo__empty-message"></div>
+      <div className="todo__empty-message">Пока нет никаких заданий</div>
     );
+  }
+
+  //!поиск
+  if(hasTask && isEmptyFilteredTasks) {
+    return <div className="todo__empty-message">Задачи не найдены</div>
   }
 
   return (
