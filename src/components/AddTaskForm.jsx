@@ -6,6 +6,7 @@ import { Button } from './Button';
 export const AddTaskForm = (props) => {
   const {
     addTask,
+    newTaskInputRef, //!добавление задачи через useRef
     newTaskTitle, //useState добавление задачи
     setNewTaskTitle, //useState добавление задачи
   } = props;
@@ -28,6 +29,7 @@ export const AddTaskForm = (props) => {
         onInput={(event) =>
           setNewTaskTitle(event.target.value)
         } //useState добавление задачи
+        ref={newTaskInputRef} //!добавление задачи через useRef
       />
       <Button type="submit">Добавить</Button>
     </form>

@@ -12,20 +12,27 @@ export const TodoList = (props) => {
 
   //!поиск
   //*Пока нет никаких заданий
-  const hasTask = tasks.length > 0
+  const hasTask = tasks.length > 0;
   //* Задачи не найдены
-  const isEmptyFilteredTasks = filteredTasks?.length === 0
+  const isEmptyFilteredTasks =
+    filteredTasks?.length === 0;
 
   // если нет задач отображается todo__empty-message
   if (!hasTask) {
     return (
-      <div className="todo__empty-message">Пока нет никаких заданий</div>
+      <div className="todo__empty-message">
+        Пока нет никаких заданий
+      </div>
     );
   }
 
   //!поиск
-  if(hasTask && isEmptyFilteredTasks) {
-    return <div className="todo__empty-message">Задачи не найдены</div>
+  if (hasTask && isEmptyFilteredTasks) {
+    return (
+      <div className="todo__empty-message">
+        Задачи не найдены
+      </div>
+    );
   }
 
   return (

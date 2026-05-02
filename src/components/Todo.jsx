@@ -1,5 +1,9 @@
 //выводит все компоненты
-import { useState, useEffect } from 'react';
+import {
+  useState,
+  useEffect,
+  useRef,
+} from 'react';
 import { AddTaskForm } from './AddTaskForm';
 import { SearchTaskForm } from './SearchTaskForm';
 import { TodoInfo } from './TodoInfo';
@@ -43,6 +47,9 @@ export const Todo = () => {
   //добавляем задачи в список
   const [newTaskTitle, setNewTaskTitle] =
     useState('');
+
+  //добавляем задачи через useRef
+  const newTaskInputRef = useRef(null);
 
   //!Поиск задач
   const [searchQuery, setSearchQuery] =
@@ -108,7 +115,7 @@ export const Todo = () => {
   // *  Date.now().toString()
   // Если crypto не сработал, мы берем способ который работает во всех браузерах
 
-
+  //добавление задачи через useState
   const addTask = () => {
     if (newTaskTitle.trim().length > 0) {
       const newTask = {
@@ -121,14 +128,34 @@ export const Todo = () => {
 
       // добавляем к старым задачам новую
       setTasks([...tasks, newTask]);
-
       // Очищаем поле ввода
       setNewTaskTitle('');
-
       //сброс поля поиска. если в поле поиска написан текст и пользователь переключился на ввод новой задачи после добавления новая задача добавится
-      setSearchQuery('')
+      setSearchQuery('');
     }
   };
+
+  //!добавление задачи через useRef
+  // const addTask = () => {
+  //   const newTaskTitle = newTaskInputRef.current.value
+  //      if (newTaskTitle.trim().length > 0) {
+  //     const newTask = {
+  //       id:
+  //         crypto?.randomUUID() ??
+  //         Date.now().toString(),
+  //       title: newTaskTitle,
+  //       isDone: false,
+  //     };
+
+  //     // добавляем к старым задачам новую
+  //     setTasks([...tasks, newTask]);
+  //     // Очищаем поле ввода
+  //     newTaskInputRef.current.value = ''
+  //     // setNewTaskTitle('');
+  //     //сброс поля поиска. если в поле поиска написан текст и пользователь переключился на ввод новой задачи после добавления новая задача добавится
+  //     setSearchQuery('')
+  //   }
+  // };
 
   //что бы при перезагрузки страницы задачи были на месте
   useEffect(() => {
@@ -164,6 +191,7 @@ export const Todo = () => {
         addTask={addTask}
         newTaskTitle={newTaskTitle} //useState добавление задачи
         setNewTaskTitle={setNewTaskTitle} //useState перезаписываем добавление задачи
+        newTaskInputRef={newTaskInputRef} //добавление задачи через useRef
       />
       <SearchTaskForm
         searchQuery={searchQuery}

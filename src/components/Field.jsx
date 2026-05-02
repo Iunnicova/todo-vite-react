@@ -7,6 +7,7 @@ export const Field = (props) => {
     type = 'text',
     onInput,
     value, //useState добавление задачи
+    ref,
   } = props;
 
   return (
@@ -26,6 +27,7 @@ export const Field = (props) => {
         type={type}
         value={value} //useState добавление задачи
         onInput={onInput}
+        ref={ref}
       />
     </div>
   );
