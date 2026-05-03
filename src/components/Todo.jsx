@@ -49,6 +49,10 @@ export const Todo = () => {
     useState('');
 
   //добавляем задачи через useRef
+  // const newTaskInputRef = useRef(null);
+
+  //!вызываем метод FOCUS чтобы отловить момент загрузки страницы
+  // получаем через useRef доступ к дом элементу input
   const newTaskInputRef = useRef(null);
 
   //!Поиск задач
@@ -115,7 +119,7 @@ export const Todo = () => {
   // *  Date.now().toString()
   // Если crypto не сработал, мы берем способ который работает во всех браузерах
 
-  //добавление задачи через useState
+  //*добавление задачи через useState
   const addTask = () => {
     if (newTaskTitle.trim().length > 0) {
       const newTask = {
@@ -126,38 +130,15 @@ export const Todo = () => {
         isDone: false,
       };
 
-      // добавляем к старым задачам новую
+      //* добавляем к старым задачам новую
       setTasks([...tasks, newTask]);
-      // Очищаем поле ввода
-      setNewTaskTitle('');
-      //сброс поля поиска. если в поле поиска написан текст и пользователь переключился на ввод новой задачи после добавления новая задача добавится
-      setSearchQuery('');
+      setNewTaskTitle(''); // Очищаем поле ввода
+      setSearchQuery(''); //сброс поля поиска. если в поле поиска написан текст и пользователь переключился на ввод новой задачи после добавления новая задача добавится
+      newTaskInputRef.current.focus(); //FOCUS при заполнении поля
     }
   };
 
-  //!добавление задачи через useRef
-  // const addTask = () => {
-  //   const newTaskTitle = newTaskInputRef.current.value
-  //      if (newTaskTitle.trim().length > 0) {
-  //     const newTask = {
-  //       id:
-  //         crypto?.randomUUID() ??
-  //         Date.now().toString(),
-  //       title: newTaskTitle,
-  //       isDone: false,
-  //     };
-
-  //     // добавляем к старым задачам новую
-  //     setTasks([...tasks, newTask]);
-  //     // Очищаем поле ввода
-  //     newTaskInputRef.current.value = ''
-  //     // setNewTaskTitle('');
-  //     //сброс поля поиска. если в поле поиска написан текст и пользователь переключился на ввод новой задачи после добавления новая задача добавится
-  //     setSearchQuery('')
-  //   }
-  // };
-
-  //что бы при перезагрузки страницы задачи были на месте
+  //!что бы при перезагрузки страницы задачи были на месте
   useEffect(() => {
     // console.log(' сохраняем данные в хранилище изменился tasks', tasks)
     localStorage.setItem(
@@ -165,6 +146,11 @@ export const Todo = () => {
       JSON.stringify(tasks)
     ); //срабатывает каждый раз когда список задач меняется
   }, [tasks]); //что бы следить за изменением нужного состояния
+
+  //! FOCUS при заполнении задач
+  useEffect(() => {
+    newTaskInputRef.current.focus();
+  }, []);
 
   //!поиск
   //trim() обрезаем с обеех сторон с пробелов приводим к нижнему регистру
