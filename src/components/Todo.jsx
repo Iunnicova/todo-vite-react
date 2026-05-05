@@ -8,21 +8,9 @@ import { AddTaskForm } from './AddTaskForm';
 import { SearchTaskForm } from './SearchTaskForm';
 import { TodoInfo } from './TodoInfo';
 import { TodoList } from './TodoList';
+import { Button } from './Button'
 
 export const Todo = () => {
-  //обновляем список задач
-  // const [tasks, setTasks] = useState([
-  //   {
-  //     id: 'Задача-1',
-  //     title: 'Купить молоко',
-  //     isDone: false,
-  //   },
-  //   {
-  //     id: 'Задача-2',
-  //     title: 'Покормить кошку',
-  //     isDone: true,
-  //   },
-  // ]);
   const [tasks, setTasks] = useState(() => {
     const savedTasks =
       localStorage.getItem('tasks');
@@ -192,6 +180,7 @@ export const Todo = () => {
         } // число выполненных задач
         onDeleteAllButtonClick={deleteAllTasks} //кнопка удалить все
       />
+      <Button>Показать первое незавершенное задание</Button>
       <TodoList
         tasks={tasks} //передаем дела
         filteredTasks={filteredTasks} // поиск
