@@ -8,7 +8,7 @@ import { AddTaskForm } from './AddTaskForm';
 import { SearchTaskForm } from './SearchTaskForm';
 import { TodoInfo } from './TodoInfo';
 import { TodoList } from './TodoList';
-import { Button } from './Button'
+import { Button } from './Button';
 
 export const Todo = () => {
   const [tasks, setTasks] = useState(() => {
@@ -36,16 +36,19 @@ export const Todo = () => {
   const [newTaskTitle, setNewTaskTitle] =
     useState('');
 
-  //добавляем задачи через useRef
-  // const newTaskInputRef = useRef(null);
+  //!Поиск задач
+  const [searchQuery, setSearchQuery] =
+    useState('');
 
   //!вызываем метод FOCUS чтобы отловить момент загрузки страницы
   // получаем через useRef доступ к дом элементу input
   const newTaskInputRef = useRef(null);
 
-  //!Поиск задач
-  const [searchQuery, setSearchQuery] =
-    useState('');
+  //!переходим к первой незавершенной задачи
+  const firstIncompleteTaskRef = useRef(null);
+  const firstIncompleteTaskId = tasks.find(
+    ({ isDone }) => !isDone
+  )?.id; //если такой элемент есть получаем его id
 
   //!удалить все задачи
   const deleteAllTasks = () => {
@@ -96,7 +99,7 @@ export const Todo = () => {
   //   console.log(`Поиск: ${query}`);
   // };
 
-  // * новая задача и добавлялась при нажатии на ENTER
+  //! * новая задача и добавлялась при нажатии на ENTER
   // console.log('Задача добавлена')
   //   .trim() отрезает все пробелы в начале и в конце строки, что точно ввели текст
   //   length > 0 - Если длина больше 0, значит, там есть хотя бы одна буква или цифра. Значит, задача настоящая!
@@ -180,12 +183,28 @@ export const Todo = () => {
         } // число выполненных задач
         onDeleteAllButtonClick={deleteAllTasks} //кнопка удалить все
       />
-      <Button>Показать первое незавершенное задание</Button>
+      <Button
+        //scrollIntoView() метод домЭлемента
+        onClick={() =>
+          firstIncompleteTaskRef.current?.scrollIntoView(
+            { behavior: 'smooth' }
+          )
+        }
+      >
+        Показать первое незавершенное задание
+      </Button>
+
       <TodoList
         tasks={tasks} //передаем дела
         filteredTasks={filteredTasks} // поиск
         onDeleteTasksButtonClick={deleteTasks} //удаление задачи
         onTaskCompleteChange={toggleTaskComplete} //галочка добавить убрать
+        firstIncompleteTaskRef={
+          firstIncompleteTaskRef
+        } //переходим к первой незавершенной задачи
+        firstIncompleteTaskId={
+          firstIncompleteTaskId
+        } //переходим к первой незавершенной задачи
       />
     </div>
   );

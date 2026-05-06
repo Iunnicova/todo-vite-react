@@ -5,12 +5,19 @@ export const TodoItem = (props) => {
     id,
     title,
     isDone, //флаг выполнена задача или нет
+    ref, //переходим к первой незавершенной задачи
     onDeleteTasksButtonClick, //удаление задачи
     onTaskCompleteChange, //добавление удаление галочки
   } = props;
 
   return (
-    <li className={`todo-item ${className}`}>
+    //ref={ref} переходим к первой незавершенной задачи
+    <li
+      className={`todo-item ${className}`}
+      ref={ref}
+    >
+      {' '}
+      /
       <input
         className="todo-item__checkbox"
         id={id}

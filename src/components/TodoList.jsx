@@ -6,6 +6,8 @@ export const TodoList = (props) => {
   const {
     tasks = [],
     filteredTasks,
+    firstIncompleteTaskRef,
+    firstIncompleteTaskId,
     onDeleteTasksButtonClick,
     onTaskCompleteChange,
   } = props;
@@ -42,10 +44,12 @@ export const TodoList = (props) => {
       {(filteredTasks ?? tasks).map((task) => (
         <TodoItem
           className="todo__item"
-          // id={task.id}
-          // title={task.title}
-          // isDone={task.isDone}
           key={task.id} // обязательно уникальный key
+          ref={
+            task.id === firstIncompleteTaskId
+              ? firstIncompleteTaskRef
+              : null
+          } //переходим к первой незавершенной задачи проверяем если id совпадает иначе передаем null
           onDeleteTasksButtonClick={
             onDeleteTasksButtonClick
           } //удаление задачи
