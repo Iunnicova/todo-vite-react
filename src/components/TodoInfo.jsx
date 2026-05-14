@@ -1,7 +1,9 @@
 // Общее колисество задач и кнопка удалить
 // Сколько задач из скольки сделано
+import { memo } from 'react'
 
-export const TodoInfo = (props) => {
+export const TodoInfo = memo((props) => {
+  console.log('TodoInfo')
   const {
     total,
     done,
@@ -30,4 +32,4 @@ export const TodoInfo = (props) => {
       )}
     </div>
   );
-};
+});

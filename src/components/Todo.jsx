@@ -3,6 +3,7 @@ import {
   useState,
   useEffect,
   useRef,
+  useCallback,
 } from 'react';
 import { AddTaskForm } from './AddTaskForm';
 import { SearchTaskForm } from './SearchTaskForm';
@@ -11,6 +12,7 @@ import { TodoList } from './TodoList';
 import { Button } from './Button';
 
 export const Todo = () => {
+  console.log('Todo')
   const [tasks, setTasks] = useState(() => {
     const savedTasks =
       localStorage.getItem('tasks');
@@ -51,7 +53,7 @@ export const Todo = () => {
   )?.id; //если такой элемент есть получаем его id
 
   //!удалить все задачи
-  const deleteAllTasks = () => {
+  const deleteAllTasks = useCallback(() => {
     // console.log('удалить все задачи')
 
     //спрашиваем действительно ли пользователь хочет удалить все задачи разом
@@ -63,7 +65,7 @@ export const Todo = () => {
     if (isConfirmed) {
       setTasks([]);
     }
-  };
+  }, [])
 
   //!удаляем одну задачу с id
   const deleteTasks = (taskId) => {
@@ -158,6 +160,11 @@ export const Todo = () => {
             .includes(clearSearchQuery)
         )
       : null;
+
+      //!что бы кнопка не пересоздавадась каждый раз заново
+      // const memoizedFn = useCallback(() => {
+
+      // },[]) 
 
   return (
     <div className="todo">
