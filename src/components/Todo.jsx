@@ -52,7 +52,8 @@ export const Todo = () => {
     ({ isDone }) => !isDone
   )?.id; //если такой элемент есть получаем его id
 
-  //!удалить все задачи
+  //!удалить все задачи  
+  // **оборачиваем в useCallback что бы кнопка не пересоздавалась каждый раз заново**
   const deleteAllTasks = useCallback(() => {
     // console.log('удалить все задачи')
 
@@ -68,21 +69,14 @@ export const Todo = () => {
   }, [])
 
   //!удаляем одну задачу с id
-  const deleteTasks = (taskId) => {
-    // console.log(
-    //   `удаляем задачу с id: ${tasksId}`
-    // );
+  const deleteTask = useCallback( (taskId) => {
     setTasks(
       tasks.filter((task) => task.id !== taskId)
-    );
-  };
+    )
+  }, [tasks])
 
   //!чекбокс задач и сколько задач выполнено из скольки
-  const toggleTaskComplete = (taskId, isDone) => {
-    // console.log(
-    //   `Задача ${taskId} ${isDone ? 'Выполнена' : 'Не выполнена'}`
-    // );
-
+  const toggleTaskComplete = useCallback((taskId, isDone) => {
     //* перебираем массив с помощью map
     setTasks(
       tasks.map((task) => {
@@ -94,7 +88,7 @@ export const Todo = () => {
         return task;
       })
     );
-  };
+  }, [tasks])
 
   //поле поиска
   // const filterTasks = (query) => {
@@ -161,11 +155,6 @@ export const Todo = () => {
         )
       : null;
 
-      //!что бы кнопка не пересоздавадась каждый раз заново
-      // const memoizedFn = useCallback(() => {
-
-      // },[]) 
-
   return (
     <div className="todo">
       <h1 className="todo__title">
@@ -204,14 +193,10 @@ export const Todo = () => {
       <TodoList
         tasks={tasks} //передаем дела
         filteredTasks={filteredTasks} // поиск
-        onDeleteTasksButtonClick={deleteTasks} //удаление задачи
+        firstIncompleteTaskRef={firstIncompleteTaskRef} //переходим к первой незавершенной задачи
+        firstIncompleteTaskId={firstIncompleteTaskId} //переходим к первой незавершенной задачи
+        onDeleteTasksButtonClick={deleteTask} //удаление задачи
         onTaskCompleteChange={toggleTaskComplete} //галочка добавить убрать
-        firstIncompleteTaskRef={
-          firstIncompleteTaskRef
-        } //переходим к первой незавершенной задачи
-        firstIncompleteTaskId={
-          firstIncompleteTaskId
-        } //переходим к первой незавершенной задачи
       />
     </div>
   );

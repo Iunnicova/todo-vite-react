@@ -1,7 +1,9 @@
 // Поле новая задача
 import { TodoItem } from './TodoItem';
+import { memo } from 'react'
 
-export const TodoList = (props) => {
+export const TodoList = memo((props) => {
+  console.log('TodoList')
   //! делаем тодоЛист динамическим будет принимать массив задачи через пропсы и рендерить на основе этих данных
   const {
     tasks = [],
@@ -61,4 +63,4 @@ export const TodoList = (props) => {
       ))}
     </ul>
   );
-};
+});
