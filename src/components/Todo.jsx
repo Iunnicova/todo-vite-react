@@ -4,6 +4,7 @@ import {
   useEffect,
   useRef,
   useCallback,
+  useMemo,
 } from 'react';
 import { AddTaskForm } from './AddTaskForm';
 import { SearchTaskForm } from './SearchTaskForm';
@@ -140,20 +141,18 @@ export const Todo = () => {
   }, []);
 
   //!поиск
-  //trim() обрезаем с обеех сторон с пробелов приводим к нижнему регистру
-  const clearSearchQuery = searchQuery
-    .trim()
-    .toLowerCase();
-
   //фильтруем если clearSearchQuery длина введенного значения больше 0 в таком случае обращаемся к tasks вызываем метод фильтер и в колбеке будет простая проверка структуируем заголовок задачи title возвращаем результат проверки, получим только те задачи у которых в title входит наш поисковый запрос без учета регистра второй строкой пишем null что бы когда длина чистого поискового запроса 0 символов в filteredTasks все обнулялось. Если поиск не активен (если в поле поиска пусто или только пробелы то в filteredTasks )
-  const filteredTasks =
-    clearSearchQuery.length > 0
+  //* useMemo запоминает результат вычислений пока входные данные не изменились, стабилизация вычисляемых данных
+  const filteredTasks = useMemo(() => {
+  const clearSearchQuery = searchQuery.trim().toLowerCase();  //trim() обрезаем с обеех сторон с пробелов приводим к нижнему регистру
+    return clearSearchQuery.length > 0
       ? tasks.filter(({ title }) =>
           title
             .toLowerCase()
             .includes(clearSearchQuery)
         )
       : null;
+  }, [searchQuery, tasks])  //данные от которых зависят внутренние вычисления
 
   return (
     <div className="todo">
@@ -173,10 +172,7 @@ export const Todo = () => {
       />
       <TodoInfo
         total={tasks.length} //всего колличество задач
-        done={
-          tasks.filter(({ isDone }) => isDone)
-            .length
-        } // число выполненных задач
+        done={tasks.filter(({ isDone }) => isDone).length} // число выполненных задач
         onDeleteAllButtonClick={deleteAllTasks} //кнопка удалить все
       />
       <Button
