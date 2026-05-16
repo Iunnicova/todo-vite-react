@@ -1,6 +1,8 @@
 // Поле задач
-export const TodoItem = (props) => {
-  console.log('TodoItem')
+import { memo } from 'react';
+
+export const TodoItem = memo((props) => {
+  // console.log('TodoItem')
   const {
     className = '',
     id,
@@ -65,4 +67,4 @@ export const TodoItem = (props) => {
       </button>
     </li>
   );
-};
+});

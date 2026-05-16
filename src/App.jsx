@@ -1,7 +1,6 @@
 import { Todo } from './components/Todo.jsx';
 
 const App = () => {
-  console.log('Add')
   return <Todo />;
 };
 export default App;

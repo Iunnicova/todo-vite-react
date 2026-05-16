@@ -13,7 +13,7 @@ import { TodoList } from './TodoList';
 import { Button } from './Button';
 
 export const Todo = () => {
-  console.log('Todo')
+  // console.log('Todo')
   const [tasks, setTasks] = useState(() => {
     const savedTasks =
       localStorage.getItem('tasks');
@@ -53,7 +53,7 @@ export const Todo = () => {
     ({ isDone }) => !isDone
   )?.id; //если такой элемент есть получаем его id
 
-  //!удалить все задачи  
+  //!удалить все задачи
   // **оборачиваем в useCallback что бы кнопка не пересоздавалась каждый раз заново**
   const deleteAllTasks = useCallback(() => {
     // console.log('удалить все задачи')
@@ -67,29 +67,35 @@ export const Todo = () => {
     if (isConfirmed) {
       setTasks([]);
     }
-  }, [])
+  }, []);
 
   //!удаляем одну задачу с id
-  const deleteTask = useCallback( (taskId) => {
-    setTasks(
-      tasks.filter((task) => task.id !== taskId)
-    )
-  }, [tasks])
+  const deleteTask = useCallback(
+    (taskId) => {
+      setTasks(
+        tasks.filter((task) => task.id !== taskId)
+      );
+    },
+    [tasks]
+  );
 
   //!чекбокс задач и сколько задач выполнено из скольки
-  const toggleTaskComplete = useCallback((taskId, isDone) => {
-    //* перебираем массив с помощью map
-    setTasks(
-      tasks.map((task) => {
-        //* если id совпадает с переданным возвращаем новый объект задач в котором изменяем только поле is Dane
-        if (task.id === taskId) {
-          return { ...task, isDone };
-        }
-        //* для всех остальных задач возвращает их без изменений
-        return task;
-      })
-    );
-  }, [tasks])
+  const toggleTaskComplete = useCallback(
+    (taskId, isDone) => {
+      //* перебираем массив с помощью map
+      setTasks(
+        tasks.map((task) => {
+          //* если id совпадает с переданным возвращаем новый объект задач в котором изменяем только поле is Dane
+          if (task.id === taskId) {
+            return { ...task, isDone };
+          }
+          //* для всех остальных задач возвращает их без изменений
+          return task;
+        })
+      );
+    },
+    [tasks]
+  );
 
   //поле поиска
   // const filterTasks = (query) => {
@@ -107,8 +113,8 @@ export const Todo = () => {
   // *  Date.now().toString()
   // Если crypto не сработал, мы берем способ который работает во всех браузерах
 
-  //*добавление задачи через useState
-  const addTask = () => {
+  //!добавление задачи
+  const addTask = useCallback(() => {
     if (newTaskTitle.trim().length > 0) {
       const newTask = {
         id:
@@ -117,14 +123,16 @@ export const Todo = () => {
         title: newTaskTitle,
         isDone: false,
       };
-
       //* добавляем к старым задачам новую
-      setTasks([...tasks, newTask]);
+      setTasks((prevTasks) => [
+        ...prevTasks,
+        newTask,
+      ]); // колбек дает доступ к актуальному на момент срабатывания setTasks состоянию, prevTasks-предыдущее состояние
       setNewTaskTitle(''); // Очищаем поле ввода
       setSearchQuery(''); //сброс поля поиска. если в поле поиска написан текст и пользователь переключился на ввод новой задачи после добавления новая задача добавится
       newTaskInputRef.current.focus(); //FOCUS при заполнении поля
     }
-  };
+  }, [newTaskTitle]);
 
   //!что бы при перезагрузки страницы задачи были на месте
   useEffect(() => {
@@ -144,7 +152,9 @@ export const Todo = () => {
   //фильтруем если clearSearchQuery длина введенного значения больше 0 в таком случае обращаемся к tasks вызываем метод фильтер и в колбеке будет простая проверка структуируем заголовок задачи title возвращаем результат проверки, получим только те задачи у которых в title входит наш поисковый запрос без учета регистра второй строкой пишем null что бы когда длина чистого поискового запроса 0 символов в filteredTasks все обнулялось. Если поиск не активен (если в поле поиска пусто или только пробелы то в filteredTasks )
   //* useMemo запоминает результат вычислений пока входные данные не изменились, стабилизация вычисляемых данных
   const filteredTasks = useMemo(() => {
-  const clearSearchQuery = searchQuery.trim().toLowerCase();  //trim() обрезаем с обеех сторон с пробелов приводим к нижнему регистру
+    const clearSearchQuery = searchQuery
+      .trim()
+      .toLowerCase(); //trim() обрезаем с обеех сторон с пробелов приводим к нижнему регистру
     return clearSearchQuery.length > 0
       ? tasks.filter(({ title }) =>
           title
@@ -152,7 +162,13 @@ export const Todo = () => {
             .includes(clearSearchQuery)
         )
       : null;
-  }, [searchQuery, tasks])  //данные от которых зависят внутренние вычисления
+  }, [searchQuery, tasks]); //данные от которых зависят внутренние вычисления
+
+  //! число выполненных задач
+  const doneTasks = useMemo(() => {
+    return tasks.filter(({ isDone }) => isDone)
+      .length;
+  }, [tasks]);
 
   return (
     <div className="todo">
@@ -172,7 +188,7 @@ export const Todo = () => {
       />
       <TodoInfo
         total={tasks.length} //всего колличество задач
-        done={tasks.filter(({ isDone }) => isDone).length} // число выполненных задач
+        done={doneTasks} // число выполненных задач
         onDeleteAllButtonClick={deleteAllTasks} //кнопка удалить все
       />
       <Button
@@ -189,8 +205,12 @@ export const Todo = () => {
       <TodoList
         tasks={tasks} //передаем дела
         filteredTasks={filteredTasks} // поиск
-        firstIncompleteTaskRef={firstIncompleteTaskRef} //переходим к первой незавершенной задачи
-        firstIncompleteTaskId={firstIncompleteTaskId} //переходим к первой незавершенной задачи
+        firstIncompleteTaskRef={
+          firstIncompleteTaskRef
+        } //переходим к первой незавершенной задачи
+        firstIncompleteTaskId={
+          firstIncompleteTaskId
+        } //переходим к первой незавершенной задачи
         onDeleteTasksButtonClick={deleteTask} //удаление задачи
         onTaskCompleteChange={toggleTaskComplete} //галочка добавить убрать
       />
