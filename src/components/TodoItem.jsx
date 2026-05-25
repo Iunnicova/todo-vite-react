@@ -1,26 +1,29 @@
 // Поле задач
-import { memo } from 'react';
+import { useContext } from 'react';
+import { TasksContext } from '../context/TasksContext';
 
-export const TodoItem = memo((props) => {
-  // console.log('TodoItem')
+export const TodoItem = ((props) => {
   const {
     className = '',
     id,
     title,
     isDone, //флаг выполнена задача или нет
-    ref, //переходим к первой незавершенной задачи
-    onDeleteTasksButtonClick, //удаление задачи
-    onTaskCompleteChange, //добавление удаление галочки
   } = props;
+
+  const {
+  firstIncompleteTaskRef,
+  firstIncompleteTaskId,
+   deleteTask,
+  toggleTaskComplete,
+  } = useContext(TasksContext)
 
   return (
     //ref={ref} переходим к первой незавершенной задачи
     <li
       className={`todo-item ${className}`}
-      ref={ref}
+      ref={id === firstIncompleteTaskId ? firstIncompleteTaskRef : null}
     >
       {' '}
-      /
       <input
         className="todo-item__checkbox"
         id={id}
@@ -28,7 +31,7 @@ export const TodoItem = memo((props) => {
         checked={isDone}
         // readOnly //нельзя изменить текст в input
         onChange={({ target }) => {
-          onTaskCompleteChange(
+          toggleTaskComplete(
             id,
             target.checked
           );
@@ -46,7 +49,7 @@ export const TodoItem = memo((props) => {
         aria-label="Delete"
         title="Delete"
         onClick={() =>
-          onDeleteTasksButtonClick(id)
+          deleteTask(id)
         }
       >
         <svg

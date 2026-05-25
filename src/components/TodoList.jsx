@@ -1,18 +1,25 @@
 // Поле новая задача
 import { TodoItem } from './TodoItem';
-import { memo } from 'react';
+import { useContext } from 'react';
+import { TasksContext } from '../context/TasksContext';
 
-export const TodoList = memo((props) => {
-  // console.log('TodoList')
-  //! делаем тодоЛист динамическим будет принимать массив задачи через пропсы и рендерить на основе этих данных
+// export const TodoList = memo((props) => {
+//   // console.log('TodoList')
+//   //! делаем тодоЛист динамическим будет принимать массив задачи через пропсы и рендерить на основе этих данных
+//   const {
+//     tasks = [],
+//     filteredTasks,
+//     firstIncompleteTaskRef,
+//     firstIncompleteTaskId,
+//     onDeleteTasksButtonClick,
+//     onTaskCompleteChange,
+//   } = props;
+
+export const TodoList = (() => {
   const {
-    tasks = [],
-    filteredTasks,
-    firstIncompleteTaskRef,
-    firstIncompleteTaskId,
-    onDeleteTasksButtonClick,
-    onTaskCompleteChange,
-  } = props;
+   tasks,
+   filteredTasks,
+  } = useContext(TasksContext)
 
   //!поиск
   //*Пока нет никаких заданий
@@ -47,18 +54,19 @@ export const TodoList = memo((props) => {
         <TodoItem
           className="todo__item"
           key={task.id} // обязательно уникальный key
-          ref={
-            task.id === firstIncompleteTaskId
-              ? firstIncompleteTaskRef
-              : null
-          } //переходим к первой незавершенной задачи проверяем если id совпадает иначе передаем null
-          onDeleteTasksButtonClick={
-            onDeleteTasksButtonClick
-          } //удаление задачи
-          onTaskCompleteChange={
-            onTaskCompleteChange
-          } //удаление галочки
           {...task} //а можно и так не перечисляя все пропсы используем спред он разворачивает все пропсы
+          
+          // ref={
+          //   task.id === firstIncompleteTaskId
+          //     ? firstIncompleteTaskRef
+          //     : null
+          // } //переходим к первой незавершенной задачи проверяем если id совпадает иначе передаем null
+          // onDeleteTasksButtonClick={
+          //   onDeleteTasksButtonClick
+          // } //удаление задачи
+          // onTaskCompleteChange={
+          //   onTaskCompleteChange
+          // } //удаление галочки
         />
       ))}
     </ul>

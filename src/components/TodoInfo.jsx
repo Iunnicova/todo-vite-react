@@ -1,17 +1,24 @@
 // Общее колисество задач и кнопка удалить
 // Сколько задач из скольки сделано
-import { memo } from 'react';
+import { useContext, useMemo } from 'react';
+import { TasksContext } from '../context/TasksContext';
 
-export const TodoInfo = memo((props) => {
-  // console.log('TodoInfo')
+export const TodoInfo = (() => {
   const {
-    total,
-    done,
-    onDeleteAllButtonClick, //объявили в todo
-  } = props;
+   tasks,
+   deleteAllTasks,
+  } = useContext(TasksContext)
+
+  const total = tasks.length
 
   //! для кнопки если больше нуля кнопка появляется
   const hasTasks = total > 0;
+
+    //! число выполненных задач
+  const done = useMemo(() => {
+    return tasks.filter(({ isDone }) => isDone)
+      .length;
+  }, [tasks]);
 
   return (
     <div className="todo__info">
@@ -25,7 +32,7 @@ export const TodoInfo = memo((props) => {
         <button
           className="todo__delete-all-button"
           type="button"
-          onClick={onDeleteAllButtonClick}
+          onClick={deleteAllTasks}
         >
           Удалить все
         </button>

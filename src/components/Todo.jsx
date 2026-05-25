@@ -6,6 +6,7 @@ import {
   useCallback,
   useMemo,
 } from 'react';
+import { TasksContext } from '../context/TasksContext';
 import { AddTaskForm } from './AddTaskForm';
 import { SearchTaskForm } from './SearchTaskForm';
 import { TodoInfo } from './TodoInfo';
@@ -164,13 +165,24 @@ export const Todo = () => {
       : null;
   }, [searchQuery, tasks]); //данные от которых зависят внутренние вычисления
 
-  //! число выполненных задач
-  const doneTasks = useMemo(() => {
-    return tasks.filter(({ isDone }) => isDone)
-      .length;
-  }, [tasks]);
+  //! число выполненных задач(перенесли в TodoInfo переименовали в done)
+  // const doneTasks = useMemo(() => {
+  //   return tasks.filter(({ isDone }) => isDone)
+  //     .length;
+  // }, [tasks]);
 
   return (
+ <TasksContext.Provider
+ value={{
+  tasks,
+  filteredTasks,
+  firstIncompleteTaskRef,
+  firstIncompleteTaskId,
+  deleteTask,
+  deleteAllTasks,
+  toggleTaskComplete,
+ }}
+ >
     <div className="todo">
       <h1 className="todo__title">
         Список дел, которые нужно сделать
@@ -187,9 +199,9 @@ export const Todo = () => {
         // onSearchInput={filterTasks}
       />
       <TodoInfo
-        total={tasks.length} //всего колличество задач
-        done={doneTasks} // число выполненных задач
-        onDeleteAllButtonClick={deleteAllTasks} //кнопка удалить все
+        // total={tasks.length} //всего колличество задач
+        // done={doneTasks} // число выполненных задач
+        // onDeleteAllButtonClick={deleteAllTasks} //кнопка удалить все
       />
       <Button
         //scrollIntoView() метод домЭлемента
@@ -203,17 +215,18 @@ export const Todo = () => {
       </Button>
 
       <TodoList
-        tasks={tasks} //передаем дела
-        filteredTasks={filteredTasks} // поиск
-        firstIncompleteTaskRef={
-          firstIncompleteTaskRef
-        } //переходим к первой незавершенной задачи
-        firstIncompleteTaskId={
-          firstIncompleteTaskId
-        } //переходим к первой незавершенной задачи
-        onDeleteTasksButtonClick={deleteTask} //удаление задачи
-        onTaskCompleteChange={toggleTaskComplete} //галочка добавить убрать
+        // tasks={tasks} //передаем дела
+        // filteredTasks={filteredTasks} // поиск
+        // firstIncompleteTaskRef={
+        //   firstIncompleteTaskRef
+        // } //переходим к первой незавершенной задачи
+        // firstIncompleteTaskId={
+        //   firstIncompleteTaskId
+        // } //переходим к первой незавершенной задачи
+        // onDeleteTasksButtonClick={deleteTask} //удаление задачи
+        // onTaskCompleteChange={toggleTaskComplete} //галочка добавить убрать
       />
     </div>
+ </TasksContext.Provider>
   );
 };
