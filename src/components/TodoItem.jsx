@@ -2,7 +2,7 @@
 import { useContext } from 'react';
 import { TasksContext } from '../context/TasksContext';
 
-export const TodoItem = ((props) => {
+export const TodoItem = (props) => {
   const {
     className = '',
     id,
@@ -11,17 +11,21 @@ export const TodoItem = ((props) => {
   } = props;
 
   const {
-  firstIncompleteTaskRef,
-  firstIncompleteTaskId,
-   deleteTask,
-  toggleTaskComplete,
-  } = useContext(TasksContext)
+    firstIncompleteTaskRef,
+    firstIncompleteTaskId,
+    deleteTask,
+    toggleTaskComplete,
+  } = useContext(TasksContext);
 
   return (
     //ref={ref} переходим к первой незавершенной задачи
     <li
       className={`todo-item ${className}`}
-      ref={id === firstIncompleteTaskId ? firstIncompleteTaskRef : null}
+      ref={
+        id === firstIncompleteTaskId
+          ? firstIncompleteTaskRef
+          : null
+      }
     >
       {' '}
       <input
@@ -31,10 +35,7 @@ export const TodoItem = ((props) => {
         checked={isDone}
         // readOnly //нельзя изменить текст в input
         onChange={({ target }) => {
-          toggleTaskComplete(
-            id,
-            target.checked
-          );
+          toggleTaskComplete(id, target.checked);
         }} //добавление удаление галочки
       />
       <label
@@ -48,9 +49,7 @@ export const TodoItem = ((props) => {
         className="todo-item__delete-button"
         aria-label="Delete"
         title="Delete"
-        onClick={() =>
-          deleteTask(id)
-        }
+        onClick={() => deleteTask(id)}
       >
         <svg
           width="20"
@@ -70,4 +69,4 @@ export const TodoItem = ((props) => {
       </button>
     </li>
   );
-});
+};

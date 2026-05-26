@@ -3,18 +3,16 @@
 import { useContext, useMemo } from 'react';
 import { TasksContext } from '../context/TasksContext';
 
-export const TodoInfo = (() => {
-  const {
-   tasks,
-   deleteAllTasks,
-  } = useContext(TasksContext)
+export const TodoInfo = () => {
+  const { tasks, deleteAllTasks } =
+    useContext(TasksContext);
 
-  const total = tasks.length
+  const total = tasks.length;
 
   //! для кнопки если больше нуля кнопка появляется
   const hasTasks = total > 0;
 
-    //! число выполненных задач
+  //! число выполненных задач
   const done = useMemo(() => {
     return tasks.filter(({ isDone }) => isDone)
       .length;
@@ -39,4 +37,4 @@ export const TodoInfo = (() => {
       )}
     </div>
   );
-});
+};

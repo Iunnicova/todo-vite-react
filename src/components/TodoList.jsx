@@ -15,11 +15,9 @@ import { TasksContext } from '../context/TasksContext';
 //     onTaskCompleteChange,
 //   } = props;
 
-export const TodoList = (() => {
-  const {
-   tasks,
-   filteredTasks,
-  } = useContext(TasksContext)
+export const TodoList = () => {
+  const { tasks, filteredTasks } =
+    useContext(TasksContext);
 
   //!поиск
   //*Пока нет никаких заданий
@@ -55,7 +53,7 @@ export const TodoList = (() => {
           className="todo__item"
           key={task.id} // обязательно уникальный key
           {...task} //а можно и так не перечисляя все пропсы используем спред он разворачивает все пропсы
-          
+
           // ref={
           //   task.id === firstIncompleteTaskId
           //     ? firstIncompleteTaskRef
@@ -71,4 +69,4 @@ export const TodoList = (() => {
       ))}
     </ul>
   );
-});
+};

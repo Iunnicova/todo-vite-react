@@ -2,14 +2,16 @@
 
 import { Field } from './Field';
 import { Button } from './Button';
+import { useContext } from 'react';
+import { TasksContext } from '@/context/TasksContext';
 
-export const AddTaskForm = (props) => {
+export const AddTaskForm = () => {
   const {
     addTask,
     newTaskInputRef, //!добавление задачи через useRef
     newTaskTitle, //useState добавление задачи
     setNewTaskTitle, //useState добавление задачи
-  } = props;
+  } = useContext(TasksContext);
 
   const onSubmit = (event) => {
     event.preventDefault(); //отменяет стандартное браузерное поведение из за этого не будет перегружаться страница
