@@ -1,0 +1,185 @@
+import {
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+  useMemo,
+} from 'react';
+
+const useTasks = () => {
+
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks =
+      localStorage.getItem('tasks');
+    if (savedTasks) {
+      return JSON.parse(savedTasks);
+    }
+
+    return [
+      {
+        id: 'Задача-1',
+        title: 'Купить молоко',
+        isDone: false,
+      },
+      {
+        id: 'Задача-2',
+        title: 'Покормить кошку',
+        isDone: true,
+      },
+    ];
+  });
+
+  //добавляем задачи в список
+  const [newTaskTitle, setNewTaskTitle] =
+    useState('');
+
+  //!Поиск задач
+  const [searchQuery, setSearchQuery] =
+    useState('');
+
+  //!вызываем метод FOCUS чтобы отловить момент загрузки страницы
+  // получаем через useRef доступ к дом элементу input
+  const newTaskInputRef = useRef(null);
+
+  //!переходим к первой незавершенной задачи
+  const firstIncompleteTaskRef = useRef(null);
+  const firstIncompleteTaskId = tasks.find(
+    ({ isDone }) => !isDone
+  )?.id; //если такой элемент есть получаем его id
+
+  //!удалить все задачи
+  // **оборачиваем в useCallback что бы кнопка не пересоздавалась каждый раз заново**
+  const deleteAllTasks = useCallback(() => {
+    // console.log('удалить все задачи')
+
+    //спрашиваем действительно ли пользователь хочет удалить все задачи разом
+    const isConfirmed = confirm(
+      'Вы уверены, что хотите удалить все?'
+    );
+
+    //если пользователь подтвердит что хочет удалить все задачи то..
+    if (isConfirmed) {
+      setTasks([]);
+    }
+  }, []);
+
+  //!удаляем одну задачу с id
+  const deleteTask = useCallback(
+    (taskId) => {
+      setTasks(
+        tasks.filter((task) => task.id !== taskId)
+      );
+    },
+    [tasks]
+  );
+
+  //!чекбокс задач и сколько задач выполнено из скольки
+  const toggleTaskComplete = useCallback(
+    (taskId, isDone) => {
+      //* перебираем массив с помощью map
+      setTasks(
+        tasks.map((task) => {
+          //* если id совпадает с переданным возвращаем новый объект задач в котором изменяем только поле is Dane
+          if (task.id === taskId) {
+            return { ...task, isDone };
+          }
+          //* для всех остальных задач возвращает их без изменений
+          return task;
+        })
+      );
+    },
+    [tasks]
+  );
+
+  //поле поиска
+  // const filterTasks = (query) => {
+  //   console.log(`Поиск: ${query}`);
+  // };
+
+  //! * новая задача и добавлялась при нажатии на ENTER
+  // console.log('Задача добавлена')
+  //   .trim() отрезает все пробелы в начале и в конце строки, что точно ввели текст
+  //   length > 0 - Если длина больше 0, значит, там есть хотя бы одна буква или цифра. Значит, задача настоящая!
+  // * crypto?.randomUUID()-генерирует супернадежный id
+  // Это современный стандарт. Функция генерирует очень длинную, случайную и уникальную строку (например, 123e4567-e89b-12d3-a456-426614174000).Вероятность дубля: Практически нулевая.
+  // *    ?
+  //  (Optional Chaining): Это проверка. Если вдруг браузер старый и не знает, что такое crypto, код не выдаст ошибку, а просто вернет undefined и пойдет дальше.
+  // *  Date.now().toString()
+  // Если crypto не сработал, мы берем способ который работает во всех браузерах
+
+  //!добавление задачи
+  const addTask = useCallback(() => {
+    if (newTaskTitle.trim().length > 0) {
+      const newTask = {
+        id:
+          crypto?.randomUUID() ??
+          Date.now().toString(),
+        title: newTaskTitle,
+        isDone: false,
+      };
+      //* добавляем к старым задачам новую
+      setTasks((prevTasks) => [
+        ...prevTasks,
+        newTask,
+      ]); // колбек дает доступ к актуальному на момент срабатывания setTasks состоянию, prevTasks-предыдущее состояние
+      setNewTaskTitle(''); // Очищаем поле ввода
+      setSearchQuery(''); //сброс поля поиска. если в поле поиска написан текст и пользователь переключился на ввод новой задачи после добавления новая задача добавится
+      newTaskInputRef.current.focus(); //FOCUS при заполнении поля
+    }
+  }, [newTaskTitle]);
+
+  //!что бы при перезагрузки страницы задачи были на месте
+  useEffect(() => {
+    // console.log(' сохраняем данные в хранилище изменился tasks', tasks)
+    localStorage.setItem(
+      'tasks',
+      JSON.stringify(tasks)
+    ); //срабатывает каждый раз когда список задач меняется
+  }, [tasks]); //что бы следить за изменением нужного состояния
+
+  //! FOCUS при заполнении задач
+  useEffect(() => {
+    newTaskInputRef.current.focus();
+  }, []);
+
+  //!поиск
+  //фильтруем если clearSearchQuery длина введенного значения больше 0 в таком случае обращаемся к tasks вызываем метод фильтер и в колбеке будет простая проверка структуируем заголовок задачи title возвращаем результат проверки, получим только те задачи у которых в title входит наш поисковый запрос без учета регистра второй строкой пишем null что бы когда длина чистого поискового запроса 0 символов в filteredTasks все обнулялось. Если поиск не активен (если в поле поиска пусто или только пробелы то в filteredTasks )
+  //* useMemo запоминает результат вычислений пока входные данные не изменились, стабилизация вычисляемых данных
+  const filteredTasks = useMemo(() => {
+    const clearSearchQuery = searchQuery
+      .trim()
+      .toLowerCase(); //trim() обрезаем с обеех сторон с пробелов приводим к нижнему регистру
+    return clearSearchQuery.length > 0
+      ? tasks.filter(({ title }) =>
+        title
+          .toLowerCase()
+          .includes(clearSearchQuery)
+      )
+      : null;
+  }, [searchQuery, tasks]); //данные от которых зависят внутренние вычисления
+
+  //! число выполненных задач(перенесли в TodoInfo переименовали в done)
+  // const doneTasks = useMemo(() => {
+  //   return tasks.filter(({ isDone }) => isDone)
+  //     .length;
+  // }, [tasks]);
+
+  return {
+    tasks,
+    filteredTasks,
+    firstIncompleteTaskRef,
+    firstIncompleteTaskId,
+    deleteTask,
+    deleteAllTasks,
+    toggleTaskComplete,
+
+    newTaskTitle,
+    setNewTaskTitle,
+    searchQuery,
+    setSearchQuery,
+    newTaskInputRef,
+    addTask,
+  }
+}
+
+export default useTasks
