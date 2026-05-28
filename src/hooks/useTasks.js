@@ -41,12 +41,6 @@ const useTasks = () => {
   // получаем через useRef доступ к дом элементу input
   const newTaskInputRef = useRef(null);
 
-  //!переходим к первой незавершенной задачи
-  const firstIncompleteTaskRef = useRef(null);
-  const firstIncompleteTaskId = tasks.find(
-    ({ isDone }) => !isDone
-  )?.id; //если такой элемент есть получаем его id
-
   //!удалить все задачи
   // **оборачиваем в useCallback что бы кнопка не пересоздавалась каждый раз заново**
   const deleteAllTasks = useCallback(() => {
@@ -167,12 +161,9 @@ const useTasks = () => {
   return {
     tasks,
     filteredTasks,
-    firstIncompleteTaskRef,
-    firstIncompleteTaskId,
     deleteTask,
     deleteAllTasks,
     toggleTaskComplete,
-
     newTaskTitle,
     setNewTaskTitle,
     searchQuery,

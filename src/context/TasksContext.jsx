@@ -3,6 +3,7 @@
 
 import { createContext } from 'react';
 import useTasks from '../hooks/useTasks';
+import useIncompleteTasks from '../hooks/useIncompleteTasks'
 
 export const TasksContext = createContext({});
 
@@ -12,8 +13,6 @@ export const TasksProvider = (props) => {
   const {
     tasks,
     filteredTasks,
-    firstIncompleteTaskRef,
-    firstIncompleteTaskId,
     deleteTask,
     deleteAllTasks,
     toggleTaskComplete,
@@ -25,17 +24,21 @@ export const TasksProvider = (props) => {
     addTask,
   } = useTasks()
 
+  const {
+    firstIncompleteTaskRef,
+    firstIncompleteTaskId,
+  } = useIncompleteTasks(tasks)
+
   return (
     <TasksContext.Provider
       value={{
         tasks,
         filteredTasks,
-        firstIncompleteTaskRef,
-        firstIncompleteTaskId,
         deleteTask,
         deleteAllTasks,
         toggleTaskComplete,
-
+        firstIncompleteTaskRef,
+        firstIncompleteTaskId,
         newTaskTitle,
         setNewTaskTitle,
         searchQuery,
