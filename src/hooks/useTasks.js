@@ -5,17 +5,14 @@ import {
   useEffect,
   useMemo,
 } from 'react';
+import useTasksLocalStorage from './useTasksLocalStorage';
 
 const useTasks = () => {
+  const { savedTasks, saveTasks } =
+    useTasksLocalStorage();
 
-  const [tasks, setTasks] = useState(() => {
-    const savedTasks =
-      localStorage.getItem('tasks');
-    if (savedTasks) {
-      return JSON.parse(savedTasks);
-    }
-
-    return [
+  const [tasks, setTasks] = useState(
+    savedTasks ?? [
       {
         id: 'Задача-1',
         title: 'Купить молоко',
@@ -26,8 +23,8 @@ const useTasks = () => {
         title: 'Покормить кошку',
         isDone: true,
       },
-    ];
-  });
+    ]
+  );
 
   //добавляем задачи в список
   const [newTaskTitle, setNewTaskTitle] =
@@ -124,11 +121,7 @@ const useTasks = () => {
 
   //!что бы при перезагрузки страницы задачи были на месте
   useEffect(() => {
-    // console.log(' сохраняем данные в хранилище изменился tasks', tasks)
-    localStorage.setItem(
-      'tasks',
-      JSON.stringify(tasks)
-    ); //срабатывает каждый раз когда список задач меняется
+    saveTasks(tasks);
   }, [tasks]); //что бы следить за изменением нужного состояния
 
   //! FOCUS при заполнении задач
@@ -145,10 +138,10 @@ const useTasks = () => {
       .toLowerCase(); //trim() обрезаем с обеех сторон с пробелов приводим к нижнему регистру
     return clearSearchQuery.length > 0
       ? tasks.filter(({ title }) =>
-        title
-          .toLowerCase()
-          .includes(clearSearchQuery)
-      )
+          title
+            .toLowerCase()
+            .includes(clearSearchQuery)
+        )
       : null;
   }, [searchQuery, tasks]); //данные от которых зависят внутренние вычисления
 
@@ -170,7 +163,7 @@ const useTasks = () => {
     setSearchQuery,
     newTaskInputRef,
     addTask,
-  }
-}
+  };
+};
 
-export default useTasks
+export default useTasks;

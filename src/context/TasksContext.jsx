@@ -3,7 +3,7 @@
 
 import { createContext } from 'react';
 import useTasks from '../hooks/useTasks';
-import useIncompleteTasks from '../hooks/useIncompleteTasks'
+import useIncompleteTasks from '../hooks/useIncompleteTasks';
 
 export const TasksContext = createContext({});
 
@@ -22,12 +22,12 @@ export const TasksProvider = (props) => {
     setSearchQuery,
     newTaskInputRef,
     addTask,
-  } = useTasks()
+  } = useTasks();
 
   const {
     firstIncompleteTaskRef,
     firstIncompleteTaskId,
-  } = useIncompleteTasks(tasks)
+  } = useIncompleteTasks(tasks);
 
   return (
     <TasksContext.Provider
