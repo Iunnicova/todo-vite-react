@@ -13,9 +13,17 @@ export const AddTaskForm = () => {
     setNewTaskTitle, //useState добавление задачи
   } = useContext(TasksContext);
 
+  //!не нажимается кнопка новая задача пока пустое поле
+  const clearNewTaskTitle = newTaskTitle.trim()
+  const isNewTaskTitleEmpty = clearNewTaskTitle.length === 0
+
   const onSubmit = (event) => {
     event.preventDefault(); //отменяет стандартное браузерное поведение из за этого не будет перегружаться страница
-    addTask(); //для добавления новой задачи
+
+    //!проверяем что поле новая задача не пустое
+    if(!isNewTaskTitleEmpty) {
+      addTask(clearNewTaskTitle); //для добавления новой задачи
+    }
   };
 
   return (
@@ -35,7 +43,8 @@ export const AddTaskForm = () => {
       />
       <Button
         type="submit"
-        isDisabled={newTaskTitle.trim().length === 0}  //не нажимается кнопка новая задача пока пустое поле
+        isDisabled={isNewTaskTitleEmpty}  //не нажимается кнопка новая задача пока пустое поле
+      // isDisabled={newTaskTitle.trim().length === 0}  //не нажимается кнопка новая задача пока пустое поле
       >
         Добавить
       </Button>
