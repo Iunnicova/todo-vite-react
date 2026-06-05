@@ -33,7 +33,12 @@ export const AddTaskForm = () => {
         } //useState добавление задачи
         ref={newTaskInputRef} //!добавление задачи через useRef
       />
-      <Button type="submit">Добавить</Button>
+      <Button
+        type="submit"
+        isDisabled={newTaskTitle.trim().length === 0}  //не нажимается кнопка новая задача пока пустое поле
+      >
+        Добавить
+      </Button>
     </form>
   );
 };
