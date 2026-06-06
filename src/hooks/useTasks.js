@@ -100,19 +100,21 @@ const useTasks = () => {
 
   //!добавление задачи
   const addTask = useCallback((title) => {
-      const newTask = {
-        id:crypto?.randomUUID() ?? Date.now().toString(),
-        title,
-        isDone: false,
-      };
-      //* добавляем к старым задачам новую
-      setTasks((prevTasks) => [
-        ...prevTasks,
-        newTask,
-      ]); // колбек дает доступ к актуальному на момент срабатывания setTasks состоянию, prevTasks-предыдущее состояние
-      setNewTaskTitle(''); // Очищаем поле ввода
-      setSearchQuery(''); //сброс поля поиска. если в поле поиска написан текст и пользователь переключился на ввод новой задачи после добавления новая задача добавится
-      newTaskInputRef.current.focus(); //FOCUS при заполнении поля
+    const newTask = {
+      id:
+        crypto?.randomUUID() ??
+        Date.now().toString(),
+      title,
+      isDone: false,
+    };
+    //* добавляем к старым задачам новую
+    setTasks((prevTasks) => [
+      ...prevTasks,
+      newTask,
+    ]); // колбек дает доступ к актуальному на момент срабатывания setTasks состоянию, prevTasks-предыдущее состояние
+    setNewTaskTitle(''); // Очищаем поле ввода
+    setSearchQuery(''); //сброс поля поиска. если в поле поиска написан текст и пользователь переключился на ввод новой задачи после добавления новая задача добавится
+    newTaskInputRef.current.focus(); //FOCUS при заполнении поля
   }, []);
 
   //!что бы при перезагрузки страницы задачи были на месте

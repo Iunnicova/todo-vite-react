@@ -6,6 +6,7 @@ export const Field = (props) => {
     label,
     type = 'text',
     onInput,
+    error,
     value, //useState добавление задачи
     ref,
   } = props;
@@ -20,7 +21,7 @@ export const Field = (props) => {
         {label}
       </label>
       <input
-        className="field__input"
+        className={`field__input ${error ? 'is-invalid' : ''}`} //выводится ошибка если пользователь вводит пробелы в задачи
         id={id}
         placeholder=" "
         autoComplete="off"
@@ -29,6 +30,12 @@ export const Field = (props) => {
         onInput={onInput}
         ref={ref}
       />
+      {/* выводится ошибка если пользователь вводит пробелы в задачи */}
+      {error && (
+        <span className="field__error">
+          {error}
+        </span>
+      )}
     </div>
   );
 };

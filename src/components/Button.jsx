@@ -3,7 +3,7 @@ export const Button = (props) => {
     className = '',
     type = 'button',
     children,
-    isDisabled,  
+    isDisabled,
     onClick,
   } = props;
 
@@ -11,7 +11,7 @@ export const Button = (props) => {
     <button
       className={`button ${className}`}
       type={type}
-      disabled={isDisabled}  //не нажимается кнопка новая задача пока пустое поле
+      disabled={isDisabled} //не нажимается кнопка новая задача пока пустое поле
       onClick={onClick}
     >
       {/* Добавить */}
