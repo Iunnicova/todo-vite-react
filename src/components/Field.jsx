@@ -32,7 +32,9 @@ export const Field = (props) => {
       />
       {/* выводится ошибка если пользователь вводит пробелы в задачи */}
       {error && (
-        <span className="field__error">
+        <span className="field__error"
+        title={"error"}
+        >
           {error}
         </span>
       )}

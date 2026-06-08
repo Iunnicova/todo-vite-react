@@ -65,4 +65,21 @@
       background-repeat: no-repeat; /*не повторяется*/
     }
   }
+
+  &.is-invalid {
+    border-color: var( --color-dark-1);
+  }
+}
+
+.field__error {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  font-size: 12px;
+  color: var( --color-dark-1);
+  /* что бы текст не выходил за рамки */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 100%;
 }
