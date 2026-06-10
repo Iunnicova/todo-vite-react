@@ -5,26 +5,10 @@ import {
   useEffect,
   useMemo,
 } from 'react';
-import useTasksLocalStorage from './useTasksLocalStorage';
+
 
 const useTasks = () => {
-  const { savedTasks, saveTasks } =
-    useTasksLocalStorage();
-
-  const [tasks, setTasks] = useState(
-    savedTasks ?? [
-      {
-        id: 'Задача-1',
-        title: 'Купить молоко',
-        isDone: false,
-      },
-      {
-        id: 'Задача-2',
-        title: 'Покормить кошку',
-        isDone: true,
-      },
-    ]
-  );
+  const [tasks, setTasks] = useState([]);
 
   //добавляем задачи в список
   const [newTaskTitle, setNewTaskTitle] =
@@ -82,49 +66,37 @@ const useTasks = () => {
     [tasks]
   );
 
-  //поле поиска
-  // const filterTasks = (query) => {
-  //   console.log(`Поиск: ${query}`);
-  // };
-
-  //! * новая задача и добавлялась при нажатии на ENTER
-  // console.log('Задача добавлена')
-  //   .trim() отрезает все пробелы в начале и в конце строки, что точно ввели текст
-  //   length > 0 - Если длина больше 0, значит, там есть хотя бы одна буква или цифра. Значит, задача настоящая!
-  // * crypto?.randomUUID()-генерирует супернадежный id
-  // Это современный стандарт. Функция генерирует очень длинную, случайную и уникальную строку (например, 123e4567-e89b-12d3-a456-426614174000).Вероятность дубля: Практически нулевая.
-  // *    ?
-  //  (Optional Chaining): Это проверка. Если вдруг браузер старый и не знает, что такое crypto, код не выдаст ошибку, а просто вернет undefined и пойдет дальше.
-  // *  Date.now().toString()
-  // Если crypto не сработал, мы берем способ который работает во всех браузерах
-
-  //!добавление задачи
+  //! добавление новая задача и добавлялась при нажатии на ENTER
   const addTask = useCallback((title) => {
     const newTask = {
-      id:
-        crypto?.randomUUID() ??
-        Date.now().toString(),
       title,
       isDone: false,
     };
-    //* добавляем к старым задачам новую
-    setTasks((prevTasks) => [
-      ...prevTasks,
-      newTask,
-    ]); // колбек дает доступ к актуальному на момент срабатывания setTasks состоянию, prevTasks-предыдущее состояние
-    setNewTaskTitle(''); // Очищаем поле ввода
-    setSearchQuery(''); //сброс поля поиска. если в поле поиска написан текст и пользователь переключился на ввод новой задачи после добавления новая задача добавится
-    newTaskInputRef.current.focus(); //FOCUS при заполнении поля
+
+    fetch('http://localhost:3001/tasks', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newTask),
+    })
+      .then((response) => response.json())                  //преобразуем ответ сервера в нужный нам формат
+      .then((addedTasks) => {
+        //* добавляем к старым задачам новую
+        setTasks((prevTasks) => [...prevTasks, addedTasks]);  // колбек дает доступ к актуальному на момент срабатывания setTasks состоянию, prevTasks-предыдущее состояние
+        setNewTaskTitle('');                                // Очищаем поле ввода
+        setSearchQuery('');                                 //сброс поля поиска. если в поле поиска написан текст и пользователь переключился на ввод новой задачи после добавления новая задача добавится
+        newTaskInputRef.current.focus();                    //FOCUS при заполнении поля
+      })
   }, []);
 
-  //!что бы при перезагрузки страницы задачи были на месте
+  //! выполняем запрос к серверу 
   useEffect(() => {
-    saveTasks(tasks);
-  }, [tasks]); //что бы следить за изменением нужного состояния
+    newTaskInputRef.current.focus();              //FOCUS при заполнении задач 
 
-  //! FOCUS при заполнении задач
-  useEffect(() => {
-    newTaskInputRef.current.focus();
+    fetch('http://localhost:3001/tasks')
+      .then((response) => response.json())       //преобразуем ответ сервера в нужный нам формат
+      .then(setTasks)                            // во второй приходят данные в обработанном виде
   }, []);
 
   //!поиск
@@ -136,10 +108,10 @@ const useTasks = () => {
       .toLowerCase(); //trim() обрезаем с обеех сторон с пробелов приводим к нижнему регистру
     return clearSearchQuery.length > 0
       ? tasks.filter(({ title }) =>
-          title
-            .toLowerCase()
-            .includes(clearSearchQuery)
-        )
+        title
+          .toLowerCase()
+          .includes(clearSearchQuery)
+      )
       : null;
   }, [searchQuery, tasks]); //данные от которых зависят внутренние вычисления
 
