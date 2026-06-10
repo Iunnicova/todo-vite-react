@@ -34,19 +34,27 @@ const useTasks = () => {
 
     //если пользователь подтвердит что хочет удалить все задачи то..
     if (isConfirmed) {
-      setTasks([]);
+      Promise.all(
+        tasks.map(({ id }) => {
+          return fetch(`http://localhost:3001/tasks/${id}`, {
+            method: 'DELETE'
+          })
+        })
+      ).then(() => setTasks([]))
     }
-  }, []);
+  }, [tasks]);
 
   //!удаляем одну задачу с id
-  const deleteTask = useCallback(
-    (taskId) => {
-      setTasks(
-        tasks.filter((task) => task.id !== taskId)
-      );
-    },
-    [tasks]
-  );
+  const deleteTask = useCallback((taskId) => {
+    fetch(`http://localhost:3001/tasks/${taskId}`, {
+      method: 'DELETE'
+    })
+      .then(() => {
+        setTasks(
+          tasks.filter((task) => task.id !== taskId)
+        )
+      })
+  }, [tasks]);
 
   //!чекбокс задач и сколько задач выполнено из скольки
   const toggleTaskComplete = useCallback(
