@@ -59,8 +59,16 @@ const useTasks = () => {
   //!чекбокс задач и сколько задач выполнено из скольки
   const toggleTaskComplete = useCallback(
     (taskId, isDone) => {
-      //* перебираем массив с помощью map
+    fetch(`http://localhost:3001/tasks/${taskId}`,{
+      method: 'PATCH',  //PATCH изменить существующее
+       headers: {
+        'Content-Type': 'application/json',
+      },
+        body: JSON.stringify({isDone}),         //передаем только те данные которые подверглись изменениям
+     })
+     .then(() =>{
       setTasks(
+          //* перебираем массив с помощью map
         tasks.map((task) => {
           //* если id совпадает с переданным возвращаем новый объект задач в котором изменяем только поле is Dane
           if (task.id === taskId) {
@@ -70,9 +78,8 @@ const useTasks = () => {
           return task;
         })
       );
-    },
-    [tasks]
-  );
+     })
+    },[tasks]);
 
   //! добавление новая задача и добавлялась при нажатии на ENTER
   const addTask = useCallback((title) => {
@@ -82,7 +89,7 @@ const useTasks = () => {
     };
 
     fetch('http://localhost:3001/tasks', {
-      method: 'POST',
+      method: 'POST',   //POST добавить новое 
       headers: {
         'Content-Type': 'application/json',
       },
