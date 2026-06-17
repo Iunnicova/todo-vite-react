@@ -1,3 +1,4 @@
+import tasksAPI from '@/api/tasksAPL';
 import {
   useState,
   useCallback,
@@ -25,7 +26,6 @@ const useTasks = () => {
   //!удалить все задачи
   // **оборачиваем в useCallback что бы кнопка не пересоздавалась каждый раз заново**
   const deleteAllTasks = useCallback(() => {
-    // console.log('удалить все задачи')
 
     //спрашиваем действительно ли пользователь хочет удалить все задачи разом
     const isConfirmed = confirm(
@@ -34,52 +34,40 @@ const useTasks = () => {
 
     //если пользователь подтвердит что хочет удалить все задачи то..
     if (isConfirmed) {
-      Promise.all(
-        tasks.map(({ id }) => {
-          return fetch(`http://localhost:3001/tasks/${id}`, {
-            method: 'DELETE'
-          })
-        })
-      ).then(() => setTasks([]))
+      tasksAPI.deleteAll(tasks).then(() => setTasks([]))   // из tasksAPI
     }
   }, [tasks]);
 
   //!удаляем одну задачу с id
   const deleteTask = useCallback((taskId) => {
-    fetch(`http://localhost:3001/tasks/${taskId}`, {
-      method: 'DELETE'
+
+    // из tasksAPI
+    tasksAPI.delete(taskId).then(() => {
+      setTasks(
+        tasks.filter((task) => task.id !== taskId)
+      )
     })
-      .then(() => {
-        setTasks(
-          tasks.filter((task) => task.id !== taskId)
-        )
-      })
   }, [tasks]);
 
   //!чекбокс задач и сколько задач выполнено из скольки
   const toggleTaskComplete = useCallback(
     (taskId, isDone) => {
-    fetch(`http://localhost:3001/tasks/${taskId}`,{
-      method: 'PATCH',  //PATCH изменить существующее
-       headers: {
-        'Content-Type': 'application/json',
-      },
-        body: JSON.stringify({isDone}),         //передаем только те данные которые подверглись изменениям
-     })
-     .then(() =>{
-      setTasks(
-          //* перебираем массив с помощью map
-        tasks.map((task) => {
-          //* если id совпадает с переданным возвращаем новый объект задач в котором изменяем только поле is Dane
-          if (task.id === taskId) {
-            return { ...task, isDone };
-          }
-          //* для всех остальных задач возвращает их без изменений
-          return task;
+
+      tasksAPI.toggleComplete(taskId, isDone)
+        .then(() => {
+          setTasks(
+            //* перебираем массив с помощью map
+            tasks.map((task) => {
+              //* если id совпадает с переданным возвращаем новый объект задач в котором изменяем только поле is Dane
+              if (task.id === taskId) {
+                return { ...task, isDone };
+              }
+              //* для всех остальных задач возвращает их без изменений
+              return task;
+            })
+          );
         })
-      );
-     })
-    },[tasks]);
+    }, [tasks]);
 
   //! добавление новая задача и добавлялась при нажатии на ENTER
   const addTask = useCallback((title) => {
@@ -87,31 +75,21 @@ const useTasks = () => {
       title,
       isDone: false,
     };
-
-    fetch('http://localhost:3001/tasks', {
-      method: 'POST',   //POST добавить новое 
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newTask),
+    // из tasksAPI
+    tasksAPI.add(newTask).then((addedTasks) => {
+      //* добавляем к старым задачам новую
+      setTasks((prevTasks) => [...prevTasks, addedTasks]);  // колбек дает доступ к актуальному на момент срабатывания setTasks состоянию, prevTasks-предыдущее состояние
+      setNewTaskTitle('');                                // Очищаем поле ввода
+      setSearchQuery('');                                 //сброс поля поиска. если в поле поиска написан текст и пользователь переключился на ввод новой задачи после добавления новая задача добавится
+      newTaskInputRef.current.focus();                    //FOCUS при заполнении поля
     })
-      .then((response) => response.json())                  //преобразуем ответ сервера в нужный нам формат
-      .then((addedTasks) => {
-        //* добавляем к старым задачам новую
-        setTasks((prevTasks) => [...prevTasks, addedTasks]);  // колбек дает доступ к актуальному на момент срабатывания setTasks состоянию, prevTasks-предыдущее состояние
-        setNewTaskTitle('');                                // Очищаем поле ввода
-        setSearchQuery('');                                 //сброс поля поиска. если в поле поиска написан текст и пользователь переключился на ввод новой задачи после добавления новая задача добавится
-        newTaskInputRef.current.focus();                    //FOCUS при заполнении поля
-      })
   }, []);
 
-  //! выполняем запрос к серверу 
+  //! выполняем запрос к серверу получение всех задач
   useEffect(() => {
     newTaskInputRef.current.focus();              //FOCUS при заполнении задач 
 
-    fetch('http://localhost:3001/tasks')
-      .then((response) => response.json())       //преобразуем ответ сервера в нужный нам формат
-      .then(setTasks)                            // во второй приходят данные в обработанном виде
+    tasksAPI.getAll().then(setTasks)  // из tasksAPI         // во второй приходят данные в обработанном виде
   }, []);
 
   //!поиск
