@@ -7,7 +7,6 @@ import {
   useMemo,
 } from 'react';
 
-
 const useTasks = () => {
   const [tasks, setTasks] = useState([]);
 
@@ -26,7 +25,6 @@ const useTasks = () => {
   //!удалить все задачи
   // **оборачиваем в useCallback что бы кнопка не пересоздавалась каждый раз заново**
   const deleteAllTasks = useCallback(() => {
-
     //спрашиваем действительно ли пользователь хочет удалить все задачи разом
     const isConfirmed = confirm(
       'Вы уверены, что хотите удалить все?'
@@ -34,26 +32,32 @@ const useTasks = () => {
 
     //если пользователь подтвердит что хочет удалить все задачи то..
     if (isConfirmed) {
-      tasksAPI.deleteAll(tasks).then(() => setTasks([]))   // из tasksAPI
+      tasksAPI
+        .deleteAll(tasks)
+        .then(() => setTasks([])); // из tasksAPI
     }
   }, [tasks]);
 
   //!удаляем одну задачу с id
-  const deleteTask = useCallback((taskId) => {
-
-    // из tasksAPI
-    tasksAPI.delete(taskId).then(() => {
-      setTasks(
-        tasks.filter((task) => task.id !== taskId)
-      )
-    })
-  }, [tasks]);
+  const deleteTask = useCallback(
+    (taskId) => {
+      // из tasksAPI
+      tasksAPI.delete(taskId).then(() => {
+        setTasks(
+          tasks.filter(
+            (task) => task.id !== taskId
+          )
+        );
+      });
+    },
+    [tasks]
+  );
 
   //!чекбокс задач и сколько задач выполнено из скольки
   const toggleTaskComplete = useCallback(
     (taskId, isDone) => {
-
-      tasksAPI.toggleComplete(taskId, isDone)
+      tasksAPI
+        .toggleComplete(taskId, isDone)
         .then(() => {
           setTasks(
             //* перебираем массив с помощью map
@@ -66,8 +70,10 @@ const useTasks = () => {
               return task;
             })
           );
-        })
-    }, [tasks]);
+        });
+    },
+    [tasks]
+  );
 
   //! добавление новая задача и добавлялась при нажатии на ENTER
   const addTask = useCallback((title) => {
@@ -78,18 +84,21 @@ const useTasks = () => {
     // из tasksAPI
     tasksAPI.add(newTask).then((addedTasks) => {
       //* добавляем к старым задачам новую
-      setTasks((prevTasks) => [...prevTasks, addedTasks]);  // колбек дает доступ к актуальному на момент срабатывания setTasks состоянию, prevTasks-предыдущее состояние
-      setNewTaskTitle('');                                // Очищаем поле ввода
-      setSearchQuery('');                                 //сброс поля поиска. если в поле поиска написан текст и пользователь переключился на ввод новой задачи после добавления новая задача добавится
-      newTaskInputRef.current.focus();                    //FOCUS при заполнении поля
-    })
+      setTasks((prevTasks) => [
+        ...prevTasks,
+        addedTasks,
+      ]); // колбек дает доступ к актуальному на момент срабатывания setTasks состоянию, prevTasks-предыдущее состояние
+      setNewTaskTitle(''); // Очищаем поле ввода
+      setSearchQuery(''); //сброс поля поиска. если в поле поиска написан текст и пользователь переключился на ввод новой задачи после добавления новая задача добавится
+      newTaskInputRef.current.focus(); //FOCUS при заполнении поля
+    });
   }, []);
 
   //! выполняем запрос к серверу получение всех задач
   useEffect(() => {
-    newTaskInputRef.current.focus();              //FOCUS при заполнении задач 
+    newTaskInputRef.current.focus(); //FOCUS при заполнении задач
 
-    tasksAPI.getAll().then(setTasks)  // из tasksAPI         // во второй приходят данные в обработанном виде
+    tasksAPI.getAll().then(setTasks); // из tasksAPI         // во второй приходят данные в обработанном виде
   }, []);
 
   //!поиск
@@ -101,10 +110,10 @@ const useTasks = () => {
       .toLowerCase(); //trim() обрезаем с обеех сторон с пробелов приводим к нижнему регистру
     return clearSearchQuery.length > 0
       ? tasks.filter(({ title }) =>
-        title
-          .toLowerCase()
-          .includes(clearSearchQuery)
-      )
+          title
+            .toLowerCase()
+            .includes(clearSearchQuery)
+        )
       : null;
   }, [searchQuery, tasks]); //данные от которых зависят внутренние вычисления
 
