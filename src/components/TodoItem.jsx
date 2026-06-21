@@ -1,6 +1,7 @@
 // Поле задач
 import { useContext } from 'react';
 import { TasksContext } from '../context/TasksContext';
+import RouterLink from './RouterLink'
 
 export const TodoItem = (props) => {
   const {
@@ -46,9 +47,10 @@ export const TodoItem = (props) => {
         {title}
       </label>
       {/* aria-label='Task detail page/Страница сведений о задаче' */}
-      <a href={`/tasks/${id}`} aria-label='Task detail page/Страница сведений о задаче'> 
+      {/* RouterLink в components */}
+      <RouterLink to={`/tasks/${id}`} aria-label='Task detail page/Страница сведений о задаче'> 
         {title}
-      </a>
+      </RouterLink>
       <button
         className="todo-item__delete-button"
         aria-label="Delete"
