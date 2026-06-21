@@ -17,9 +17,11 @@ const App = () => {
   };
 
   return (
+    //!перенесли в TasksPage
     // <TasksProvider>
     //   <Todo />
     // </TasksProvider>
+    
     //!заменяем на роутер который будет переключать страницы
     <Router routes={routes} />
   );

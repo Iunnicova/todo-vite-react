@@ -6,6 +6,7 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
+//*методы объектов
 const tasksAPI = {
   //! выполняем запрос к серверу получение всех задач
   getAll: () => {
@@ -13,6 +14,12 @@ const tasksAPI = {
       response.json()
     ); //преобразуем ответ сервера в нужный нам формат
   },
+
+  //! будем выполнять запрос к серверу для получения данных конкретной задачи по ее id
+getById: (id) => {
+return fetch(`${URL}/${id}`)
+.then((response) => response.json())
+},
 
   //! добавление новая задача и добавлялась при нажатии на ENTER
   add: (task) => {

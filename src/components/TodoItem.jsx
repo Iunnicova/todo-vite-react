@@ -39,12 +39,16 @@ export const TodoItem = (props) => {
         }} //добавление удаление галочки
       />
       <label
-        className="todo-item__label"
+        className="todo-item__label visually-hidden"   //visually-hidden утилитарный класс в styles/utils.css визуально скрывает элемент , визуально скроится но останется видимым для сканридера
         htmlFor={id}
       >
         {/* Задача 1 */}
         {title}
       </label>
+      {/* aria-label='Task detail page/Страница сведений о задаче' */}
+      <a href={`/tasks/${id}`} aria-label='Task detail page/Страница сведений о задаче'> 
+        {title}
+      </a>
       <button
         className="todo-item__delete-button"
         aria-label="Delete"
