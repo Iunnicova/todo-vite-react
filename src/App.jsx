@@ -7,7 +7,7 @@ import TasksPage from './components/pages/TasksPage';
 const App = () => {
   const routes = {
     '/': TasksPage,
-    '/tasks/123': TaskPage,
+    '/tasks/:id': TaskPage,
     '*': () => (
       <div>
         404 Page not Found / Страница не
@@ -21,7 +21,7 @@ const App = () => {
     // <TasksProvider>
     //   <Todo />
     // </TasksProvider>
-    
+
     //!заменяем на роутер который будет переключать страницы
     <Router routes={routes} />
   );

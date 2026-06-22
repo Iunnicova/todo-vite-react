@@ -1,21 +1,23 @@
 const RouterLink = (props) => {
-const {
-  to,  //наш адрес
-  children,
-  ...rest
-} = props
+  const {
+    to, //наш адрес
+    children,
+    ...rest
+  } = props;
 
-const handleClick = (event) => {
-event.preventDefault()
-window.history.pushState({}, '', to)
-window.dispatchEvent(new PopStateEvent('popstate'))
-}
+  const handleClick = (event) => {
+    event.preventDefault();
+    window.history.pushState({}, '', to);
+    window.dispatchEvent(
+      new PopStateEvent('popstate')
+    );
+  };
 
-return (
-  <a href={to} onClick={handleClick} {...rest}>
-    {children}
-  </a>
-)
-}
+  return (
+    <a href={to} onClick={handleClick} {...rest}>
+      {children}
+    </a>
+  );
+};
 
-export default RouterLink
+export default RouterLink;

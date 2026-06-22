@@ -1,7 +1,7 @@
 // Поле задач
 import { useContext } from 'react';
 import { TasksContext } from '../context/TasksContext';
-import RouterLink from './RouterLink'
+import RouterLink from './RouterLink';
 
 export const TodoItem = (props) => {
   const {
@@ -40,7 +40,7 @@ export const TodoItem = (props) => {
         }} //добавление удаление галочки
       />
       <label
-        className="todo-item__label visually-hidden"   //visually-hidden утилитарный класс в styles/utils.css визуально скрывает элемент , визуально скроится но останется видимым для сканридера
+        className="todo-item__label visually-hidden" //visually-hidden утилитарный класс в styles/utils.css визуально скрывает элемент , визуально скроится но останется видимым для сканридера
         htmlFor={id}
       >
         {/* Задача 1 */}
@@ -48,7 +48,10 @@ export const TodoItem = (props) => {
       </label>
       {/* aria-label='Task detail page/Страница сведений о задаче' */}
       {/* RouterLink в components */}
-      <RouterLink to={`/tasks/${id}`} aria-label='Task detail page/Страница сведений о задаче'> 
+      <RouterLink
+        to={`/tasks/${id}`}
+        aria-label="Task detail page/Страница сведений о задаче"
+      >
         {title}
       </RouterLink>
       <button

@@ -1,9 +1,9 @@
-import { TasksProvider } from "@/context/TasksContext";
-import { Todo } from "../Todo";
+import { TasksProvider } from '@/context/TasksContext';
+import { Todo } from '../Todo';
 const TasksPage = () => {
   return (
     <TasksProvider>
-      <Todo/>
+      <Todo />
     </TasksProvider>
   );
 };

@@ -16,10 +16,11 @@ const tasksAPI = {
   },
 
   //! будем выполнять запрос к серверу для получения данных конкретной задачи по ее id
-getById: (id) => {
-return fetch(`${URL}/${id}`)
-.then((response) => response.json())
-},
+  getById: (id) => {
+    return fetch(`${URL}/${id}`).then(
+      (response) => response.json()
+    );
+  },
 
   //! добавление новая задача и добавлялась при нажатии на ENTER
   add: (task) => {
