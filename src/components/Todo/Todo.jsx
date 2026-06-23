@@ -1,11 +1,13 @@
 //выводит все компоненты
 import { useContext } from 'react';
-import { TasksContext } from '../context/TasksContext';
-import { AddTaskForm } from './AddTaskForm';
-import { SearchTaskForm } from './SearchTaskForm';
-import { TodoInfo } from './TodoInfo';
-import { TodoList } from './TodoList';
-import { Button } from './Button';
+import { TasksContext } from '../../context/TasksContext';
+import { AddTaskForm } from '../AddTaskForm';
+import { SearchTaskForm } from '../SearchTaskForm';
+import { TodoInfo } from '../TodoInfo';
+import { TodoList } from '../TodoList';
+import { Button } from '../Button/Button';
+
+import './todo.scss';
 
 export const Todo = () => {
   const { firstIncompleteTaskRef } =

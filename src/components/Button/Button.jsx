@@ -1,3 +1,5 @@
+import './button.scss';
+
 export const Button = (props) => {
   const {
     className = '',

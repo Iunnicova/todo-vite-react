@@ -1,7 +1,9 @@
 // Поле задач
 import { useContext } from 'react';
-import { TasksContext } from '../context/TasksContext';
-import RouterLink from './RouterLink';
+import RouterLink from '../RouterLink';
+import { TasksContext } from '@/context/TasksContext';
+
+import './todo-item.scss';
 
 export const TodoItem = (props) => {
   const {

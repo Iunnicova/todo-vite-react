@@ -1,5 +1,5 @@
 // Поле новая задача
-import { TodoItem } from './TodoItem';
+import { TodoItem } from './TodoItem/TodoItem';
 import { useContext } from 'react';
 import { TasksContext } from '../context/TasksContext';
 

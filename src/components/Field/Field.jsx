@@ -1,4 +1,6 @@
 // Поля сейчас это новая задача и поиск задач
+import './field.scss';
+
 export const Field = (props) => {
   const {
     className = '',

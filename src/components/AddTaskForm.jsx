@@ -1,7 +1,7 @@
 // окно для новой задачи
 
-import { Field } from './Field';
-import { Button } from './Button';
+import { Field } from './Field/Field';
+import { Button } from './Button/Button';
 import { useContext, useState } from 'react';
 import { TasksContext } from '@/context/TasksContext';
 

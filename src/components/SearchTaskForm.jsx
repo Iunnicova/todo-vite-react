@@ -1,7 +1,7 @@
 // Форма поиска заданий
 
 import { useContext } from 'react';
-import { Field } from './Field';
+import { Field } from './Field/Field';
 import { TasksContext } from '@/context/TasksContext';
 
 export const SearchTaskForm = () => {
