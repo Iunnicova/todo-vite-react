@@ -1,5 +1,5 @@
 // Поля сейчас это новая задача и поиск задач
-import './field.scss';
+import styles from './Field.module.scss';
 
 export const Field = (props) => {
   const {
@@ -14,16 +14,18 @@ export const Field = (props) => {
   } = props;
 
   return (
-    <div className={`field ${className}`}>
+    <div
+      className={`${styles.field} ${className}`}
+    >
       <label
-        className="field__label"
+        className={styles.label}
         htmlFor={id}
       >
         {/* Новая задача*/}
         {label}
       </label>
       <input
-        className={`field__input ${error ? 'is-invalid' : ''}`} //выводится ошибка если пользователь вводит пробелы в задачи
+        className={`${styles.input} ${error ? styles.isInvalid : ''}`} //выводится ошибка если пользователь вводит пробелы в задачи
         id={id}
         placeholder=" "
         autoComplete="off"
@@ -35,7 +37,7 @@ export const Field = (props) => {
       {/* выводится ошибка если пользователь вводит пробелы в задачи */}
       {error && (
         <span
-          className="field__error"
+          className={styles.error}
           title={'error'}
         >
           {error}

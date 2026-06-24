@@ -1,25 +1,25 @@
 //выводит все компоненты
 import { useContext } from 'react';
 import { TasksContext } from '../../context/TasksContext';
-import { AddTaskForm } from '../AddTaskForm';
-import { SearchTaskForm } from '../SearchTaskForm';
-import { TodoInfo } from '../TodoInfo';
-import { TodoList } from '../TodoList';
+import { AddTaskForm } from '../AddTaskForm/AddTaskForm';
+import { SearchTaskForm } from '../SearchTaskForm/SearchTaskForm';
+import { TodoInfo } from '../TodoInfo/TodoInfo';
+import { TodoList } from '../TodoList/TodoList';
 import { Button } from '../Button/Button';
 
-import './todo.scss';
+import styles from './Todo.module.scss';
 
 export const Todo = () => {
   const { firstIncompleteTaskRef } =
     useContext(TasksContext);
   return (
-    <div className="todo">
-      <h1 className="todo__title">
+    <div className={styles.todo}>
+      <h1 className={styles.title}>
         Список дел, которые нужно сделать
       </h1>
-      <AddTaskForm />
-      <SearchTaskForm />
-      <TodoInfo />
+      <AddTaskForm styles={styles} />
+      <SearchTaskForm styles={styles} />
+      <TodoInfo styles={styles} />
       <Button
         onClick={() =>
           firstIncompleteTaskRef.current?.scrollIntoView(
@@ -29,7 +29,7 @@ export const Todo = () => {
       >
         Показать первое незавершенное задание
       </Button>
-      <TodoList />
+      <TodoList styles={styles} />
     </div>
   );
 };

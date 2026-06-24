@@ -3,15 +3,14 @@
 
   /* если внутри есть input и он НЕ пустой → двигаем label */
 
-  &:has(.field__input:not(:placeholder-shown))
-    .field__label {
+  &:has(.input:not(:placeholder-shown)) .label {
     color: var(--color-black);
     scale: 0.7; /* уменьшаем label */
     translate: -1.75em -2.6em; /* сдвигаем вверх (эффект floating label) */
   }
 }
 
-.field__label {
+.label {
   position: absolute; /* позиционируем поверх input */
   top: 50%; /* позиционируем поверх input */
   left: 17px;
@@ -19,7 +18,7 @@
   translate: 0 -50%; /* точное центрирование */
 }
 
-.field__input {
+.input {
   --fieldInputPaddingX: 16px; /* горизонтальные отступы */
   --fieldSeachInputIconSize: 16px; /* размер иконки поиска */
 
@@ -66,12 +65,12 @@
     }
   }
 
-  &.is-invalid {
+  &.isInvalid {
     border-color: var(--color-dark-1);
   }
 }
 
-.field__error {
+.error {
   position: absolute;
   top: 100%;
   left: 0;

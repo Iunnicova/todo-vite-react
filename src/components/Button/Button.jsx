@@ -1,4 +1,4 @@
-import './button.scss';
+import styles from './Button.module.scss';
 
 export const Button = (props) => {
   const {
@@ -11,7 +11,7 @@ export const Button = (props) => {
 
   return (
     <button
-      className={`button ${className}`}
+      className={`${styles.button} ${className}`}
       type={type}
       disabled={isDisabled} //не нажимается кнопка новая задача пока пустое поле
       onClick={onClick}

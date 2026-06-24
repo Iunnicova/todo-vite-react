@@ -1,9 +1,9 @@
 // Поле задач
 import { useContext } from 'react';
-import RouterLink from '../RouterLink';
+import RouterLink from '../RouterLink/RouterLink';
 import { TasksContext } from '@/context/TasksContext';
 
-import './todo-item.scss';
+import styles from './TodoItem.module.scss';
 
 export const TodoItem = (props) => {
   const {
@@ -23,7 +23,7 @@ export const TodoItem = (props) => {
   return (
     //ref={ref} переходим к первой незавершенной задачи
     <li
-      className={`todo-item ${className}`}
+      className={`${styles.todoItem} ${className}`}
       ref={
         id === firstIncompleteTaskId
           ? firstIncompleteTaskRef
@@ -32,7 +32,7 @@ export const TodoItem = (props) => {
     >
       {' '}
       <input
-        className="todo-item__checkbox"
+        className={styles.checkbox}
         id={id}
         type="checkbox"
         checked={isDone}
@@ -42,7 +42,7 @@ export const TodoItem = (props) => {
         }} //добавление удаление галочки
       />
       <label
-        className="todo-item__label visually-hidden" //visually-hidden утилитарный класс в styles/utils.css визуально скрывает элемент , визуально скроится но останется видимым для сканридера
+        className={`${styles.label} visually-hidden`} //visually-hidden утилитарный класс в styles/utils.css визуально скрывает элемент , визуально скроится но останется видимым для сканридера
         htmlFor={id}
       >
         {/* Задача 1 */}
@@ -57,7 +57,7 @@ export const TodoItem = (props) => {
         {title}
       </RouterLink>
       <button
-        className="todo-item__delete-button"
+        className={styles.deleteButton}
         aria-label="Delete"
         title="Delete"
         onClick={() => deleteTask(id)}

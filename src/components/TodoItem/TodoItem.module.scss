@@ -1,4 +1,4 @@
-.todo-item {
+.todoItem {
   display: flex; /* делаем элементы в строку (checkbox + текст + кнопка) */
   align-items: center; /*выравниваем по вертикали по центру*/
   column-gap: 12px;
@@ -11,7 +11,7 @@
   }
 
   /*состояние "исчезает" (анимация удаления)*/
-  &.is-disappearing {
+  &.isDisappearing {
     opacity: 0; /*становится прозрачным*/
     translate: 0 -75%; /*уезжает вверх*/
     transition-duration: calc(
@@ -21,7 +21,7 @@
 
     /* ~ все элементы ниже этого они поднимаются вверх, чтобы занять место удалённого элемента удаляешь задачу → она исчезает
 остальные плавно "подъезжают" вверх*/
-    & ~ .todo-item {
+    & ~ .todoItem {
       translate: 0
         calc((100% + var(--todoListRowGap)) * -1);
       transition-delay: var(
@@ -36,7 +36,7 @@
 }
 
 /*кастомный чекбокс*/
-.todo-item__checkbox {
+.checkbox {
   flex-shrink: 0; /*не сжимается*/
   appearance: none; /*убираем стандартный стиль браузера*/
   position: relative;
@@ -54,7 +54,7 @@
     border-color: var(--color-dark-2);
 
     /*влияет на текст*/
-    & + .todo-item__label {
+    & + .label {
       color: var(
         --color-gray-4
       ); /*текст меняет цвет*/
@@ -84,13 +84,13 @@
 }
 
 /*текст задачи*/
-.todo-item__label {
+.label {
   width: 100%; /*занимает всё доступное место*/
   pointer-events: none; /*нельзя кликнуть (чтобы не мешал checkbox)*/
 }
 
 /*кнопка удаления*/
-.todo-item__delete-button {
+.deleteButton {
   flex-shrink: 0; /*не сжимается*/
   display: inline-flex;
   justify-content: center; /*центр по горизонтали*/

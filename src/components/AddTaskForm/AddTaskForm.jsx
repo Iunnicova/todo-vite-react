@@ -1,11 +1,12 @@
 // окно для новой задачи
 
-import { Field } from './Field/Field';
-import { Button } from './Button/Button';
+import { Field } from '../Field/Field';
+import { Button } from '../Button/Button';
 import { useContext, useState } from 'react';
 import { TasksContext } from '@/context/TasksContext';
 
-export const AddTaskForm = () => {
+export const AddTaskForm = (props) => {
+  const { styles } = props;
   const {
     addTask,
     newTaskInputRef, //!добавление задачи через useRef
@@ -47,11 +48,11 @@ export const AddTaskForm = () => {
 
   return (
     <form
-      className="todo__form"
+      className={styles.form}
       onSubmit={onSubmit}
     >
       <Field
-        className="todo__field"
+        className={styles.field}
         label="Новая задача"
         id="new-task"
         value={newTaskTitle} //useState добавление задачи

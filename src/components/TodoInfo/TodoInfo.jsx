@@ -1,9 +1,10 @@
 // Общее колисество задач и кнопка удалить
 // Сколько задач из скольки сделано
 import { useContext, useMemo } from 'react';
-import { TasksContext } from '../context/TasksContext';
+import { TasksContext } from '../../context/TasksContext';
 
-export const TodoInfo = () => {
+export const TodoInfo = (props) => {
+  const { styles } = props;
   const { tasks, deleteAllTasks } =
     useContext(TasksContext);
 
@@ -19,8 +20,8 @@ export const TodoInfo = () => {
   }, [tasks]);
 
   return (
-    <div className="todo__info">
-      <div className="todo__total-tasks">
+    <div className={styles.info}>
+      <div className={styles.totalTasks}>
         {/* Количество задач: 
         <span> 0</span> */}
         Сделано {done} из {total}
@@ -28,7 +29,7 @@ export const TodoInfo = () => {
       {/* Кнопку будет появлятся только если есть задачи */}
       {hasTasks && (
         <button
-          className="todo__delete-all-button"
+          className={styles.deleteAllButton}
           type="button"
           onClick={deleteAllTasks}
         >

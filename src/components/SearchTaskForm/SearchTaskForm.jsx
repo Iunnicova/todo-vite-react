@@ -1,10 +1,11 @@
 // Форма поиска заданий
 
 import { useContext } from 'react';
-import { Field } from './Field/Field';
-import { TasksContext } from '@/context/TasksContext';
+import { Field } from '../Field/Field';
+import { TasksContext } from '../../context/TasksContext';
 
-export const SearchTaskForm = () => {
+export const SearchTaskForm = (props) => {
+  const { styles } = props;
   const {
     // onSearchInput
     searchQuery,
@@ -13,11 +14,11 @@ export const SearchTaskForm = () => {
 
   return (
     <form
-      className="todo__form"
+      className={styles.form}
       onSubmit={(event) => event.preventDefault()} //при нажатии ENTER страница не перезагружается
     >
       <Field
-        className="todo__field"
+        className={styles.field}
         label="Поиск задачи"
         id="search-task"
         type="search"
