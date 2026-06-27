@@ -10,7 +10,7 @@
     background-color: var(--color-gray-1);
   }
 
-  /*состояние "исчезает" (анимация удаления)*/
+  /*плавное состояние "исчезает" (анимация удаления)*/
   &.isDisappearing {
     opacity: 0; /*становится прозрачным*/
     translate: 0 -75%; /*уезжает вверх*/
@@ -48,16 +48,12 @@
 
   /*когда чекбокс отмечен*/
   &:checked {
-    background-color: var(
-      --color-dark-2
-    ); /*заливается цветом*/
+    background-color: var(--color-dark-2); /*заливается цветом*/
     border-color: var(--color-dark-2);
 
     /*влияет на текст*/
     & + .label {
-      color: var(
-        --color-gray-4
-      ); /*текст меняет цвет*/
+      color: var(--color-gray-4); /*текст меняет цвет*/
       text-decoration: line-through; /*зачеркивается*/
     }
   }

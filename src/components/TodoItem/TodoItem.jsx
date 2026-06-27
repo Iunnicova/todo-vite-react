@@ -1,5 +1,6 @@
 // Поле задач
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
+import  useCombinedRefs  from '../../hooks/useCombinedRefs'
 import RouterLink from '../RouterLink/RouterLink';
 import { TasksContext } from '@/context/TasksContext';
 
@@ -20,15 +21,17 @@ export const TodoItem = (props) => {
     toggleTaskComplete,
   } = useContext(TasksContext);
 
+  //!анимация плавная для задач
+  const animationRef = useRef(null)
+    const combinedRef = useCombinedRefs(
+        id === firstIncompleteTaskId ? firstIncompleteTaskRef : null,
+        animationRef
+    )
   return (
     //ref={ref} переходим к первой незавершенной задачи
     <li
       className={`${styles.todoItem} ${className}`}
-      ref={
-        id === firstIncompleteTaskId
-          ? firstIncompleteTaskRef
-          : null
-      }
+      ref={ combinedRef }
     >
       {' '}
       <input
