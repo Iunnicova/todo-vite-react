@@ -1,6 +1,6 @@
 // Поле задач
 import { useContext, useRef } from 'react';
-import  useCombinedRefs  from '../../hooks/useCombinedRefs'
+import useCombinedRefs from '../../hooks/useCombinedRefs';
 import RouterLink from '../RouterLink/RouterLink';
 import { TasksContext } from '@/context/TasksContext';
 
@@ -22,16 +22,18 @@ export const TodoItem = (props) => {
   } = useContext(TasksContext);
 
   //!анимация плавная для задач
-  const animationRef = useRef(null)
-    const combinedRef = useCombinedRefs(
-        id === firstIncompleteTaskId ? firstIncompleteTaskRef : null,
-        animationRef
-    )
+  const animationRef = useRef(null);
+  const combinedRef = useCombinedRefs(
+    id === firstIncompleteTaskId
+      ? firstIncompleteTaskRef
+      : null,
+    animationRef
+  );
   return (
     //ref={ref} переходим к первой незавершенной задачи
     <li
       className={`${styles.todoItem} ${className}`}
-      ref={ combinedRef }
+      ref={combinedRef}
     >
       {' '}
       <input
@@ -45,20 +47,23 @@ export const TodoItem = (props) => {
         }} //добавление удаление галочки
       />
       <label
-        className={`${styles.label} visually-hidden`} //visually-hidden утилитарный класс в styles/utils.css визуально скрывает элемент , визуально скроится но останется видимым для сканридера
+        className={`${styles.label} visually-hidden`}
         htmlFor={id}
       >
-        {/* Задача 1 */}
         {title}
       </label>
-      {/* aria-label='Task detail page/Страница сведений о задаче' */}
-      {/* RouterLink в components */}
-      <RouterLink
+      <a
+        href={`/tasks/${id}`}
+        aria-label="Task detail page/Страница сведений о задаче"
+      >
+        {title}
+      </a>
+      {/* <RouterLink
         to={`/tasks/${id}`}
         aria-label="Task detail page/Страница сведений о задаче"
       >
         {title}
-      </RouterLink>
+      </RouterLink> */}
       <button
         className={styles.deleteButton}
         aria-label="Delete"

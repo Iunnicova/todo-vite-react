@@ -2,9 +2,10 @@ import tasksAPI from '@/api/tasksAPL';
 import { useState, useEffect } from 'react';
 
 const TaskPage = (props) => {
-  const { params } = props;
+  //   const { params } = props;
 
-  const taskId = params.id;
+  const taskId = '123';
+  //   const taskId = params.id;
   const [task, setTask] = useState(null);
 
   const [isLoading, setIsLoading] =
@@ -34,12 +35,14 @@ const TaskPage = (props) => {
 
   //! проверка если hasError истинна
   if (hasError) {
-    <div>
-      Task not found!/Задание не найдено!
-    </div>;
+    return (
+      <div>
+        Task not found!/Задание не найдено!
+      </div>
+    );
   }
 
-  //!а если все эти проверки не отработали значит задача успешно загрузилась
+  //   //!а если все эти проверки не отработали значит задача успешно загрузилась
 
   return (
     <div>
@@ -48,7 +51,7 @@ const TaskPage = (props) => {
       <p>
         {task.isDone
           ? 'Задача выполнена'
-          : 'Задача не выполнена'}{' '}
+          : 'Задача не выполнена'}
       </p>
     </div>
   );

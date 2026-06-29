@@ -48,12 +48,16 @@
 
   /*когда чекбокс отмечен*/
   &:checked {
-    background-color: var(--color-dark-2); /*заливается цветом*/
+    background-color: var(
+      --color-dark-2
+    ); /*заливается цветом*/
     border-color: var(--color-dark-2);
 
     /*влияет на текст*/
     & + .label {
-      color: var(--color-gray-4); /*текст меняет цвет*/
+      color: var(
+        --color-gray-4
+      ); /*текст меняет цвет*/
       text-decoration: line-through; /*зачеркивается*/
     }
   }
@@ -74,8 +78,9 @@
     translate: -50% -50%; /*центрируем*/
     width: 16px;
     height: 16px;
-    background: url('../assets/icons/icon-check_white.svg')
+    background: url('../../assets/icons/icon-check_white.svg')
       center/contain no-repeat;
+    // background: url('../assets/icons/icon-check_white.svg')center/contain no-repeat;
   }
 }
 
