@@ -22,14 +22,9 @@
     /* ~ все элементы ниже этого они поднимаются вверх, чтобы занять место удалённого элемента удаляешь задачу → она исчезает
 остальные плавно "подъезжают" вверх*/
     & ~ .todoItem {
-      translate: 0
-        calc((100% + var(--todoListRowGap)) * -1);
-      transition-delay: var(
-        --transition-duration
-      );
-      transition-duration: var(
-        --transition-duration
-      );
+      translate: 0 calc((100% + var(--todoListRowGap)) * -1);
+      transition-delay: var(--transition-duration);
+      transition-duration: var(--transition-duration);
       pointer-events: none;
     }
   }

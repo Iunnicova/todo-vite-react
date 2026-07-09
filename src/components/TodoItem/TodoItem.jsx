@@ -24,17 +24,24 @@ export const TodoItem = (props) => {
   //!анимация плавная для задач
   const animationRef = useRef(null);
   const combinedRef = useCombinedRefs(
-    id === firstIncompleteTaskId
-      ? firstIncompleteTaskRef
-      : null,
+    id === firstIncompleteTaskId ? firstIncompleteTaskRef : null,
     animationRef
-  );
+  )
+
+  //! удаляемая задача плавно уходит наверх и становится прозрачной а нижнии элементы подтягиваются на верх 
+  ///*обработчик обращаемся к animationRef и его свойству current через оператор функциональной последовательности убеждаемся что хранится не налл а ссылка на нужный домэлемент затем через метод  .classList.add  добавляем класс со стилями (styles.isDisappearing) позже вызываем setTimeout с задержкой 400 миллисекунды функцию  deleteTask(id)
+const handleClick = () => {
+animationRef.current?.classList.add(styles.isDisappearing)
+
+setTimeout(() => {
+  deleteTask(id)
+}, 400)
+}
+
   return (
-    //ref={ref} переходим к первой незавершенной задачи
     <li
       className={`${styles.todoItem} ${className}`}
-      ref={combinedRef}
-    >
+      ref={combinedRef}>
       {' '}
       <input
         className={styles.checkbox}
@@ -62,7 +69,8 @@ export const TodoItem = (props) => {
         className={styles.deleteButton}
         aria-label="Delete"
         title="Delete"
-        onClick={() => deleteTask(id)}
+        // onClick={() => deleteTask(id)}
+        onClick={handleClick}
       >
         <svg
           width="20"
