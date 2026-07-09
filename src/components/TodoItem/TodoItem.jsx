@@ -1,6 +1,5 @@
 // Поле задач
 import { useContext, useRef } from 'react';
-import useCombinedRefs from '../../hooks/useCombinedRefs';
 import RouterLink from '../RouterLink/RouterLink';
 import { TasksContext } from '@/context/TasksContext';
 
@@ -19,29 +18,20 @@ export const TodoItem = (props) => {
     firstIncompleteTaskId,
     deleteTask,
     toggleTaskComplete,
+    disappearingTaskId,
   } = useContext(TasksContext);
 
-  //!анимация плавная для задач
-  const animationRef = useRef(null);
-  const combinedRef = useCombinedRefs(
-    id === firstIncompleteTaskId ? firstIncompleteTaskRef : null,
-    animationRef
-  )
-
-  //! удаляемая задача плавно уходит наверх и становится прозрачной а нижнии элементы подтягиваются на верх 
-  ///*обработчик обращаемся к animationRef и его свойству current через оператор функциональной последовательности убеждаемся что хранится не налл а ссылка на нужный домэлемент затем через метод  .classList.add  добавляем класс со стилями (styles.isDisappearing) позже вызываем setTimeout с задержкой 400 миллисекунды функцию  deleteTask(id)
-const handleClick = () => {
-animationRef.current?.classList.add(styles.isDisappearing)
-
-setTimeout(() => {
-  deleteTask(id)
-}, 400)
-}
-
   return (
+    //! li удаляемая задача плавно уходит наверх и становится прозрачной а нижнии элементы подтягиваются на верх
     <li
-      className={`${styles.todoItem} ${className}`}
-      ref={combinedRef}>
+      className={`
+        ${styles.todoItem} ${className} ${disappearingTaskId === id ? styles.isDisappearing : ''}`}
+      ref={
+        id === firstIncompleteTaskId
+          ? firstIncompleteTaskRef
+          : null
+      }
+    >
       {' '}
       <input
         className={styles.checkbox}
@@ -69,8 +59,7 @@ setTimeout(() => {
         className={styles.deleteButton}
         aria-label="Delete"
         title="Delete"
-        // onClick={() => deleteTask(id)}
-        onClick={handleClick}
+        onClick={() => deleteTask(id)}
       >
         <svg
           width="20"

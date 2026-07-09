@@ -10,13 +10,19 @@ import {
 const useTasks = () => {
   const [tasks, setTasks] = useState([]);
 
-  //добавляем задачи в список
+  //!добавляем задачи в список
   const [newTaskTitle, setNewTaskTitle] =
     useState('');
 
   //!Поиск задач
   const [searchQuery, setSearchQuery] =
     useState('');
+
+  //! стейт для id исчезающей задачи
+  const [
+    disappearingTaskId,
+    setDisappearingTaskId,
+  ] = useState(null);
 
   //!вызываем метод FOCUS чтобы отловить момент загрузки страницы
   // получаем через useRef доступ к дом элементу input
@@ -38,16 +44,19 @@ const useTasks = () => {
     }
   }, [tasks]);
 
-  //!удаляем одну задачу с id
+  //!удаляем одну задачу с id задача плавно уходит наверх и становится прозрачной а нижнии элементы подтягиваются на верх
   const deleteTask = useCallback(
     (taskId) => {
-      // из tasksAPI
       tasksAPI.delete(taskId).then(() => {
-        setTasks(
-          tasks.filter(
-            (task) => task.id !== taskId
-          )
-        );
+        setDisappearingTaskId(taskId);
+        setTimeout(() => {
+          setTasks(
+            tasks.filter(
+              (task) => task.id !== taskId
+            )
+          );
+          setDisappearingTaskId(null); //что бы сбросить id удаляемой задачи
+        }, 400);
       });
     },
     [tasks]
@@ -135,6 +144,7 @@ const useTasks = () => {
     setSearchQuery,
     newTaskInputRef,
     addTask,
+    disappearingTaskId,
   };
 };
 
