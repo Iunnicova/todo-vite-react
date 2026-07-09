@@ -7,8 +7,8 @@ import TasksPage from './components/pages/TasksPage';
 const App = () => {
   const routes = {
     '/': TasksPage,
-    '/tasks/123': TaskPage,
-    // '/tasks/:id': TaskPage,
+    // '/tasks/123': TaskPage,
+    '/tasks/:id': TaskPage,
     '*': () => (
       <div>
         404 Page not Found / 404 Страница не

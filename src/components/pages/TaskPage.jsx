@@ -2,10 +2,10 @@ import tasksAPI from '@/api/tasksAPL';
 import { useState, useEffect } from 'react';
 
 const TaskPage = (props) => {
-  //   const { params } = props;
+  const { params } = props;
 
-  const taskId = '123';
-  //   const taskId = params.id;
+  // const taskId = '123';
+  const taskId = params.id;
   const [task, setTask] = useState(null);
 
   const [isLoading, setIsLoading] =

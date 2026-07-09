@@ -51,30 +51,18 @@ const Router = (props) => {
   const { routes } = props;
   const path = useRoute();
 
-  // for (const route in routes) {
-  //   const params = matchPath(path, route);
+  for (const route in routes) {
+    const params = matchPath(path, route);
 
-  //   if (params) {
-  //     const Page = routes[route];
+    if (params) {
+      const Page = routes[route];
 
-  //     return <Page params={params} />;
-  //   }
-  // }
+      return <Page params={params} />;
+    }
+  }
 
-  // const NotFound = routes['*'];
-  // return <NotFound />;
-
-  //!простой вариант для очень маленькой задачи
-  // if(path.startsWith('/tasks/')) {
-  //   const id = path.replace('/tasks', '')
-  //   const TaskPage = routes['/tasks/:id']
-
-  //   return <TaskPage params={{ id }}/>
-  // }
-
-  const Page = routes[path] ?? routes['*'];
-
-  return <Page />;
+  const NotFound = routes['*'];
+  return <NotFound />;
 };
 
 export default Router;

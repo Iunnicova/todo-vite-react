@@ -52,18 +52,12 @@ export const TodoItem = (props) => {
       >
         {title}
       </label>
-      <a
-        href={`/tasks/${id}`}
-        aria-label="Task detail page/Страница сведений о задаче"
-      >
-        {title}
-      </a>
-      {/* <RouterLink
+      <RouterLink
         to={`/tasks/${id}`}
         aria-label="Task detail page/Страница сведений о задаче"
       >
         {title}
-      </RouterLink> */}
+      </RouterLink>
       <button
         className={styles.deleteButton}
         aria-label="Delete"

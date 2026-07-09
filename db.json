@@ -1,13 +1,8 @@
 {
   "tasks": [
     {
-      "title": "привет\\",
-      "isDone": true,
-      "id": 1
-    },
-    {
       "title": "йййййй",
-      "isDone": false,
+      "isDone": true,
       "id": 2
     },
     {
