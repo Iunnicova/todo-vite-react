@@ -9,12 +9,7 @@ const App = () => {
     '/': TasksPage,
     // '/tasks/123': TaskPage,
     '/tasks/:id': TaskPage,
-    '*': () => (
-      <div>
-        404 Page not Found / 404 Страница не
-        найдена
-      </div>
-    ),
+    '*': () => <div>404 Page not Found / 404 Страница не найдена</div>,
     // '*': () => (<div>404 Page not Found / 404 Страница не найдена{' '}</div>),
   };
 

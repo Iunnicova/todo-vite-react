@@ -1,28 +1,20 @@
 import tasksAPI from '@/api/tasksAPL';
-import {
-  useState,
-  useCallback,
-  useRef,
-  useEffect,
-  useMemo,
-} from 'react';
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 
 const useTasks = () => {
   const [tasks, setTasks] = useState([]);
 
   //!добавляем задачи в список
-  const [newTaskTitle, setNewTaskTitle] =
-    useState('');
+  const [newTaskTitle, setNewTaskTitle] = useState('');
 
   //!Поиск задач
-  const [searchQuery, setSearchQuery] =
-    useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
-  //! стейт для id исчезающей задачи
-  const [
-    disappearingTaskId,
-    setDisappearingTaskId,
-  ] = useState(null);
+  //! стейт для id анимация исчезающей задачи
+  const [disappearingTaskId, setDisappearingTaskId] = useState(null);
+
+  //! анимация добавления задачи
+  const [appearingTaskId, setAppearingTaskId] = useState(null);
 
   //!вызываем метод FOCUS чтобы отловить момент загрузки страницы
   // получаем через useRef доступ к дом элементу input
@@ -32,15 +24,11 @@ const useTasks = () => {
   // **оборачиваем в useCallback что бы кнопка не пересоздавалась каждый раз заново**
   const deleteAllTasks = useCallback(() => {
     //спрашиваем действительно ли пользователь хочет удалить все задачи разом
-    const isConfirmed = confirm(
-      'Вы уверены, что хотите удалить все?'
-    );
+    const isConfirmed = confirm('Вы уверены, что хотите удалить все?');
 
     //если пользователь подтвердит что хочет удалить все задачи то..
     if (isConfirmed) {
-      tasksAPI
-        .deleteAll(tasks)
-        .then(() => setTasks([])); // из tasksAPI
+      tasksAPI.deleteAll(tasks).then(() => setTasks([])); // из tasksAPI
     }
   }, [tasks]);
 
@@ -50,11 +38,7 @@ const useTasks = () => {
       tasksAPI.delete(taskId).then(() => {
         setDisappearingTaskId(taskId);
         setTimeout(() => {
-          setTasks(
-            tasks.filter(
-              (task) => task.id !== taskId
-            )
-          );
+          setTasks(tasks.filter((task) => task.id !== taskId));
           setDisappearingTaskId(null); //что бы сбросить id удаляемой задачи
         }, 400);
       });
@@ -65,21 +49,19 @@ const useTasks = () => {
   //!чекбокс задач и сколько задач выполнено из скольки
   const toggleTaskComplete = useCallback(
     (taskId, isDone) => {
-      tasksAPI
-        .toggleComplete(taskId, isDone)
-        .then(() => {
-          setTasks(
-            //* перебираем массив с помощью map
-            tasks.map((task) => {
-              //* если id совпадает с переданным возвращаем новый объект задач в котором изменяем только поле is Dane
-              if (task.id === taskId) {
-                return { ...task, isDone };
-              }
-              //* для всех остальных задач возвращает их без изменений
-              return task;
-            })
-          );
-        });
+      tasksAPI.toggleComplete(taskId, isDone).then(() => {
+        setTasks(
+          //* перебираем массив с помощью map
+          tasks.map((task) => {
+            //* если id совпадает с переданным возвращаем новый объект задач в котором изменяем только поле is Dane
+            if (task.id === taskId) {
+              return { ...task, isDone };
+            }
+            //* для всех остальных задач возвращает их без изменений
+            return task;
+          })
+        );
+      });
     },
     [tasks]
   );
@@ -93,13 +75,14 @@ const useTasks = () => {
     // из tasksAPI
     tasksAPI.add(newTask).then((addedTasks) => {
       //* добавляем к старым задачам новую
-      setTasks((prevTasks) => [
-        ...prevTasks,
-        addedTasks,
-      ]); // колбек дает доступ к актуальному на момент срабатывания setTasks состоянию, prevTasks-предыдущее состояние
+      setTasks((prevTasks) => [...prevTasks, addedTasks]); // колбек дает доступ к актуальному на момент срабатывания setTasks состоянию, prevTasks-предыдущее состояние
       setNewTaskTitle(''); // Очищаем поле ввода
       setSearchQuery(''); //сброс поля поиска. если в поле поиска написан текст и пользователь переключился на ввод новой задачи после добавления новая задача добавится
       newTaskInputRef.current.focus(); //FOCUS при заполнении поля
+      setAppearingTaskId(addedTask.id); //анимация добавления задачи
+      setTimeout(() => {
+        setAppearingTaskId(null);
+      }, 400);
     });
   }, []);
 
@@ -114,14 +97,10 @@ const useTasks = () => {
   //фильтруем если clearSearchQuery длина введенного значения больше 0 в таком случае обращаемся к tasks вызываем метод фильтер и в колбеке будет простая проверка структуируем заголовок задачи title возвращаем результат проверки, получим только те задачи у которых в title входит наш поисковый запрос без учета регистра второй строкой пишем null что бы когда длина чистого поискового запроса 0 символов в filteredTasks все обнулялось. Если поиск не активен (если в поле поиска пусто или только пробелы то в filteredTasks )
   //* useMemo запоминает результат вычислений пока входные данные не изменились, стабилизация вычисляемых данных
   const filteredTasks = useMemo(() => {
-    const clearSearchQuery = searchQuery
-      .trim()
-      .toLowerCase(); //trim() обрезаем с обеех сторон с пробелов приводим к нижнему регистру
+    const clearSearchQuery = searchQuery.trim().toLowerCase(); //trim() обрезаем с обеех сторон с пробелов приводим к нижнему регистру
     return clearSearchQuery.length > 0
       ? tasks.filter(({ title }) =>
-          title
-            .toLowerCase()
-            .includes(clearSearchQuery)
+          title.toLowerCase().includes(clearSearchQuery)
         )
       : null;
   }, [searchQuery, tasks]); //данные от которых зависят внутренние вычисления
@@ -145,6 +124,7 @@ const useTasks = () => {
     newTaskInputRef,
     addTask,
     disappearingTaskId,
+    appearingTaskId,
   };
 };
 

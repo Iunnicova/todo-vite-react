@@ -8,8 +8,7 @@ const TaskPage = (props) => {
   const taskId = params.id;
   const [task, setTask] = useState(null);
 
-  const [isLoading, setIsLoading] =
-    useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
   //! будем выполнять запрос к серверу для получения данных конкретной задачи по ее id
@@ -35,11 +34,7 @@ const TaskPage = (props) => {
 
   //! проверка если hasError истинна
   if (hasError) {
-    return (
-      <div>
-        Task not found!/Задание не найдено!
-      </div>
-    );
+    return <div>Task not found!/Задание не найдено!</div>;
   }
 
   //   //!а если все эти проверки не отработали значит задача успешно загрузилась
@@ -48,11 +43,7 @@ const TaskPage = (props) => {
     <div>
       <h1>{task.title}</h1>
       {/* если task isDone то задача выполнена в ином случае задача не выполнена*/}
-      <p>
-        {task.isDone
-          ? 'Задача выполнена'
-          : 'Задача не выполнена'}
-      </p>
+      <p>{task.isDone ? 'Задача выполнена' : 'Задача не выполнена'}</p>
     </div>
   );
 };

@@ -10,16 +10,12 @@ const headers = {
 const tasksAPI = {
   //! выполняем запрос к серверу получение всех задач
   getAll: () => {
-    return fetch(URL).then((response) =>
-      response.json()
-    ); //преобразуем ответ сервера в нужный нам формат
+    return fetch(URL).then((response) => response.json()); //преобразуем ответ сервера в нужный нам формат
   },
 
   //! будем выполнять запрос к серверу для получения данных конкретной задачи по ее id
   getById: (id) => {
-    return fetch(`${URL}/${id}`).then(
-      (response) => response.json()
-    );
+    return fetch(`${URL}/${id}`).then((response) => response.json());
   },
 
   //! добавление новая задача и добавлялась при нажатии на ENTER
@@ -40,9 +36,7 @@ const tasksAPI = {
 
   //!удалить все задачи
   deleteAll: (tasks) => {
-    return Promise.all(
-      tasks.map(({ id }) => tasksAPI.delete(id))
-    );
+    return Promise.all(tasks.map(({ id }) => tasksAPI.delete(id)));
   },
 
   //!чекбокс задач и сколько задач выполнено из скольки

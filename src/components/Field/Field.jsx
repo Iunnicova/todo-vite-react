@@ -14,13 +14,8 @@ export const Field = (props) => {
   } = props;
 
   return (
-    <div
-      className={`${styles.field} ${className}`}
-    >
-      <label
-        className={styles.label}
-        htmlFor={id}
-      >
+    <div className={`${styles.field} ${className}`}>
+      <label className={styles.label} htmlFor={id}>
         {/* Новая задача*/}
         {label}
       </label>
@@ -36,10 +31,7 @@ export const Field = (props) => {
       />
       {/* выводится ошибка если пользователь вводит пробелы в задачи */}
       {error && (
-        <span
-          className={styles.error}
-          title={'error'}
-        >
+        <span className={styles.error} title={'error'}>
           {error}
         </span>
       )}

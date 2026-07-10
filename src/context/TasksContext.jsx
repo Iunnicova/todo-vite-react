@@ -23,12 +23,11 @@ export const TasksProvider = (props) => {
     newTaskInputRef,
     addTask,
     disappearingTaskId,
+    appearingTaskId,
   } = useTasks();
 
-  const {
-    firstIncompleteTaskRef,
-    firstIncompleteTaskId,
-  } = useIncompleteTasks(tasks);
+  const { firstIncompleteTaskRef, firstIncompleteTaskId } =
+    useIncompleteTasks(tasks);
 
   return (
     <TasksContext.Provider
@@ -47,6 +46,7 @@ export const TasksProvider = (props) => {
         newTaskInputRef,
         addTask,
         disappearingTaskId,
+        appearingTaskId,
       }}
     >
       {children}

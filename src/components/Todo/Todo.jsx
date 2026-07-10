@@ -10,21 +10,16 @@ import { Button } from '../Button/Button';
 import styles from './Todo.module.scss';
 
 export const Todo = () => {
-  const { firstIncompleteTaskRef } =
-    useContext(TasksContext);
+  const { firstIncompleteTaskRef } = useContext(TasksContext);
   return (
     <div className={styles.todo}>
-      <h1 className={styles.title}>
-        Список дел, которые нужно сделать
-      </h1>
+      <h1 className={styles.title}>Список дел, которые нужно сделать</h1>
       <AddTaskForm styles={styles} />
       <SearchTaskForm styles={styles} />
       <TodoInfo styles={styles} />
       <Button
         onClick={() =>
-          firstIncompleteTaskRef.current?.scrollIntoView(
-            { behavior: 'smooth' }
-          )
+          firstIncompleteTaskRef.current?.scrollIntoView({ behavior: 'smooth' })
         }
       >
         Показать первое незавершенное задание

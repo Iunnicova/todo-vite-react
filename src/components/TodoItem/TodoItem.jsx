@@ -19,18 +19,19 @@ export const TodoItem = (props) => {
     deleteTask,
     toggleTaskComplete,
     disappearingTaskId,
+    appearingTaskId,
   } = useContext(TasksContext);
 
   return (
-    //! li удаляемая задача плавно уходит наверх и становится прозрачной а нижнии элементы подтягиваются на верх
+    //! добавление и удаляемая задача плавно уходит наверх и становится прозрачной а нижнии элементы подтягиваются на верх
     <li
       className={`
-        ${styles.todoItem} ${className} ${disappearingTaskId === id ? styles.isDisappearing : ''}`}
-      ref={
-        id === firstIncompleteTaskId
-          ? firstIncompleteTaskRef
-          : null
-      }
+        ${styles.todoItem} 
+        ${className} 
+        ${disappearingTaskId === id ? styles.isDisappearing : ''} //!анимации удаления задачи добавляем стили из isDisappearing для 
+        ${appearingTaskId === id ? styles.isAppearing : ''} //! анимации добавления задачи добавляем стили из isDisappearing для 
+        `}
+      ref={id === firstIncompleteTaskId ? firstIncompleteTaskRef : null}
     >
       {' '}
       <input
@@ -43,10 +44,7 @@ export const TodoItem = (props) => {
           toggleTaskComplete(id, target.checked);
         }} //добавление удаление галочки
       />
-      <label
-        className={`${styles.label} visually-hidden`}
-        htmlFor={id}
-      >
+      <label className={`${styles.label} visually-hidden`} htmlFor={id}>
         {title}
       </label>
       <RouterLink

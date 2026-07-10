@@ -22,15 +22,23 @@
     /* ~ все элементы ниже этого они поднимаются вверх, чтобы занять место удалённого элемента удаляешь задачу → она исчезает
 остальные плавно "подъезжают" вверх*/
     & ~ .todoItem {
-      translate: 0
-        calc((100% + var(--todoListRowGap)) * -1);
-      transition-delay: var(
-        --transition-duration
-      );
-      transition-duration: var(
-        --transition-duration
-      );
+      translate: 0 calc((100% + var(--todoListRowGap)) * -1);
+      transition-delay: var(--transition-duration);
+      transition-duration: var(--transition-duration);
       pointer-events: none;
+    }
+  }
+
+  /* анимация добавления задачи */
+  &.isAppearing {
+    animation: appear calc(var(--transition-duration) * 2);
+    pointer-events: none; //что бы заблокировать взаимодействие с задачей в процессе появления
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        translate: 0 -75%;
+      }
     }
   }
 }
@@ -48,16 +56,12 @@
 
   /*когда чекбокс отмечен*/
   &:checked {
-    background-color: var(
-      --color-dark-2
-    ); /*заливается цветом*/
+    background-color: var(--color-dark-2); /*заливается цветом*/
     border-color: var(--color-dark-2);
 
     /*влияет на текст*/
     & + .label {
-      color: var(
-        --color-gray-4
-      ); /*текст меняет цвет*/
+      color: var(--color-gray-4); /*текст меняет цвет*/
       text-decoration: line-through; /*зачеркивается*/
     }
   }
@@ -78,8 +82,8 @@
     translate: -50% -50%; /*центрируем*/
     width: 16px;
     height: 16px;
-    background: url('../../assets/icons/icon-check_white.svg')
-      center/contain no-repeat;
+    background: url('../../assets/icons/icon-check_white.svg') center/contain
+      no-repeat;
     // background: url('../assets/icons/icon-check_white.svg')center/contain no-repeat;
   }
 }

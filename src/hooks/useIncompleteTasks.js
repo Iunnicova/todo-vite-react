@@ -4,9 +4,7 @@ import { useRef } from 'react';
 const useIncompleteTasks = (tasks) => {
   //!переходим к первой незавершенной задачи
   const firstIncompleteTaskRef = useRef(null);
-  const firstIncompleteTaskId = tasks.find(
-    ({ isDone }) => !isDone
-  )?.id; //если такой элемент есть получаем его id
+  const firstIncompleteTaskId = tasks.find(({ isDone }) => !isDone)?.id; //если такой элемент есть получаем его id
 
   return {
     firstIncompleteTaskRef,

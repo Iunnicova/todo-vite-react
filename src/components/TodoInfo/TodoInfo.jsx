@@ -5,8 +5,7 @@ import { TasksContext } from '../../context/TasksContext';
 
 export const TodoInfo = (props) => {
   const { styles } = props;
-  const { tasks, deleteAllTasks } =
-    useContext(TasksContext);
+  const { tasks, deleteAllTasks } = useContext(TasksContext);
 
   const total = tasks.length;
 
@@ -15,8 +14,7 @@ export const TodoInfo = (props) => {
 
   //! число выполненных задач
   const done = useMemo(() => {
-    return tasks.filter(({ isDone }) => isDone)
-      .length;
+    return tasks.filter(({ isDone }) => isDone).length;
   }, [tasks]);
 
   return (

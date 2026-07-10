@@ -17,32 +17,22 @@ import { TasksContext } from '../../context/TasksContext';
 
 export const TodoList = (props) => {
   const { styles } = props;
-  const { tasks, filteredTasks } =
-    useContext(TasksContext);
+  const { tasks, filteredTasks } = useContext(TasksContext);
 
   //!поиск
   //*Пока нет никаких заданий
   const hasTask = tasks.length > 0;
   //* Задачи не найдены
-  const isEmptyFilteredTasks =
-    filteredTasks?.length === 0;
+  const isEmptyFilteredTasks = filteredTasks?.length === 0;
 
   // если нет задач отображается emptyMessage
   if (!hasTask) {
-    return (
-      <div className={styles.emptyMessage}>
-        Пока нет никаких заданий
-      </div>
-    );
+    return <div className={styles.emptyMessage}>Пока нет никаких заданий</div>;
   }
 
   //!поиск
   if (hasTask && isEmptyFilteredTasks) {
-    return (
-      <div className={styles.emptyMessage}>
-        Задачи не найдены
-      </div>
-    );
+    return <div className={styles.emptyMessage}>Задачи не найдены</div>;
   }
 
   return (

@@ -25,9 +25,7 @@ export const SearchTaskForm = (props) => {
         value={searchQuery}
         // onInput={(event) =>
         //   onSearchInput(event.target.value)
-        onInput={(event) =>
-          setSearchQuery(event.target.value)
-        }
+        onInput={(event) => setSearchQuery(event.target.value)}
       />
     </form>
   );

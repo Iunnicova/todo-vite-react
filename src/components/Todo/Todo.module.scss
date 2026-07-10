@@ -43,9 +43,7 @@
   border: none; /*убираем рамку*/
 
   &:hover {
-    color: var(
-      --color-gray-4
-    ); /*При наведении меняет цвет*/
+    color: var(--color-gray-4); /*При наведении меняет цвет*/
   }
 }
 
@@ -60,9 +58,7 @@
   --todoListRowGap: 8px; /* расстояние между элементами */
 
   display: grid;
-  row-gap: var(
-    --todoListRowGap
-  ); /*отступ между строками*/
+  row-gap: var(--todoListRowGap); /*отступ между строками*/
 }
 
 .emptyMessage {

@@ -19,8 +19,7 @@ export const AddTaskForm = (props) => {
 
   //!не нажимается кнопка новая задача пока пустое поле
   const clearNewTaskTitle = newTaskTitle.trim();
-  const isNewTaskTitleEmpty =
-    clearNewTaskTitle.length === 0;
+  const isNewTaskTitleEmpty = clearNewTaskTitle.length === 0;
 
   const onSubmit = (event) => {
     event.preventDefault(); //отменяет стандартное браузерное поведение из за этого не будет перегружаться страница
@@ -35,22 +34,14 @@ export const AddTaskForm = (props) => {
   const onInput = (event) => {
     const { value } = event.target;
     const clearValue = value.trim();
-    const hasOnlySpaces =
-      value.length > 0 && clearValue.length === 0;
+    const hasOnlySpaces = value.length > 0 && clearValue.length === 0;
 
     setNewTaskTitle(value);
-    setError(
-      hasOnlySpaces
-        ? 'Поле задачи не может быть пустым'
-        : ''
-    );
+    setError(hasOnlySpaces ? 'Поле задачи не может быть пустым' : '');
   };
 
   return (
-    <form
-      className={styles.form}
-      onSubmit={onSubmit}
-    >
+    <form className={styles.form} onSubmit={onSubmit}>
       <Field
         className={styles.field}
         label="Новая задача"
