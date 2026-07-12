@@ -3,7 +3,7 @@
 import { useContext, useMemo } from 'react';
 import { TasksContext } from '../../context/TasksContext';
 
-export const TodoInfo = (props) => {
+const TodoInfo = (props) => {
   const { styles } = props;
   const { tasks, deleteAllTasks } = useContext(TasksContext);
 
@@ -37,3 +37,5 @@ export const TodoInfo = (props) => {
     </div>
   );
 };
+
+export default TodoInfo;

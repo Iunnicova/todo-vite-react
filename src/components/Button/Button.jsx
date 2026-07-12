@@ -1,6 +1,6 @@
 import styles from './Button.module.scss';
 
-export const Button = (props) => {
+const Button = (props) => {
   const {
     className = '',
     type = 'button',
@@ -22,4 +22,4 @@ export const Button = (props) => {
   );
 };
 
-// export default Button
+export default Button;

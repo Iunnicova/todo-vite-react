@@ -1,21 +1,9 @@
 // Поле новая задача
-import { TodoItem } from '../TodoItem/TodoItem';
+import TodoItem from '../TodoItem/TodoItem';
 import { useContext } from 'react';
 import { TasksContext } from '../../context/TasksContext';
 
-// export const TodoList = memo((props) => {
-//   // console.log('TodoList')
-//   //! делаем тодоЛист динамическим будет принимать массив задачи через пропсы и рендерить на основе этих данных
-//   const {
-//     tasks = [],
-//     filteredTasks,
-//     firstIncompleteTaskRef,
-//     firstIncompleteTaskId,
-//     onDeleteTasksButtonClick,
-//     onTaskCompleteChange,
-//   } = props;
-
-export const TodoList = (props) => {
+const TodoList = (props) => {
   const { styles } = props;
   const { tasks, filteredTasks } = useContext(TasksContext);
 
@@ -44,20 +32,10 @@ export const TodoList = (props) => {
           className={styles.item}
           key={task.id} // обязательно уникальный key
           {...task} //а можно и так не перечисляя все пропсы используем спред он разворачивает все пропсы
-
-          // ref={
-          //   task.id === firstIncompleteTaskId
-          //     ? firstIncompleteTaskRef
-          //     : null
-          // } //переходим к первой незавершенной задачи проверяем если id совпадает иначе передаем null
-          // onDeleteTasksButtonClick={
-          //   onDeleteTasksButtonClick
-          // } //удаление задачи
-          // onTaskCompleteChange={
-          //   onTaskCompleteChange
-          // } //удаление галочки
         />
       ))}
     </ul>
   );
 };
+
+export default TodoList;

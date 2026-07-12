@@ -1,7 +1,7 @@
 // Поля сейчас это новая задача и поиск задач
 import styles from './Field.module.scss';
 
-export const Field = (props) => {
+const Field = (props) => {
   const {
     className = '',
     id,
@@ -38,3 +38,5 @@ export const Field = (props) => {
     </div>
   );
 };
+
+export default Field;

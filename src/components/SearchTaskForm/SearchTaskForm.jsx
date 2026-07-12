@@ -1,10 +1,10 @@
 // Форма поиска заданий
 
 import { useContext } from 'react';
-import { Field } from '../Field/Field';
+import Field from '../Field/Field';
 import { TasksContext } from '../../context/TasksContext';
 
-export const SearchTaskForm = (props) => {
+const SearchTaskForm = (props) => {
   const { styles } = props;
   const {
     // onSearchInput
@@ -30,3 +30,5 @@ export const SearchTaskForm = (props) => {
     </form>
   );
 };
+
+export default SearchTaskForm;

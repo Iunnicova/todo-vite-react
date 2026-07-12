@@ -1,11 +1,11 @@
 // окно для новой задачи
 
-import { Field } from '../Field/Field';
-import { Button } from '../Button/Button';
+import Field from '../Field/Field';
+import Button from '../Button/Button';
 import { useContext, useState } from 'react';
 import { TasksContext } from '@/context/TasksContext';
 
-export const AddTaskForm = (props) => {
+const AddTaskForm = (props) => {
   const { styles } = props;
   const {
     addTask,
@@ -61,3 +61,5 @@ export const AddTaskForm = (props) => {
     </form>
   );
 };
+
+export default AddTaskForm;

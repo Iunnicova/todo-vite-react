@@ -1,15 +1,15 @@
 //выводит все компоненты
 import { useContext } from 'react';
 import { TasksContext } from '../../context/TasksContext';
-import { AddTaskForm } from '../AddTaskForm/AddTaskForm';
-import { SearchTaskForm } from '../SearchTaskForm/SearchTaskForm';
-import { TodoInfo } from '../TodoInfo/TodoInfo';
-import { TodoList } from '../TodoList/TodoList';
-import { Button } from '../Button/Button';
+import AddTaskForm from '../AddTaskForm/AddTaskForm';
+import SearchTaskForm from '../SearchTaskForm/SearchTaskForm';
+import TodoInfo from '../TodoInfo/TodoInfo';
+import TodoList from '../TodoList/TodoList';
+import Button from '../Button/Button';
 
 import styles from './Todo.module.scss';
 
-export const Todo = () => {
+const Todo = () => {
   const { firstIncompleteTaskRef } = useContext(TasksContext);
   return (
     <div className={styles.todo}>
@@ -28,3 +28,5 @@ export const Todo = () => {
     </div>
   );
 };
+
+export default Todo;

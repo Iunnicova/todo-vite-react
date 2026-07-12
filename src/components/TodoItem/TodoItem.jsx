@@ -1,11 +1,11 @@
 // Поле задач
-import { useContext, useRef } from 'react';
+import { useContext } from 'react';
 import RouterLink from '../RouterLink/RouterLink';
 import { TasksContext } from '@/context/TasksContext';
 
 import styles from './TodoItem.module.scss';
 
-export const TodoItem = (props) => {
+const TodoItem = (props) => {
   const {
     className = '',
     id,
@@ -78,3 +78,5 @@ export const TodoItem = (props) => {
     </li>
   );
 };
+
+export default TodoItem;
