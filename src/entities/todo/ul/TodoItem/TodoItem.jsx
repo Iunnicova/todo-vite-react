@@ -1,7 +1,7 @@
 // Поле задач
 import { useContext } from 'react';
-import RouterLink from '../../../../shared/components/RouterLink';
-import { TasksContext } from '../../../../entities/todo';
+import RouterLink from '@/shared/components/RouterLink';
+import { TasksContext } from '@/entities/todo';
 
 import styles from './TodoItem.module.scss';
 

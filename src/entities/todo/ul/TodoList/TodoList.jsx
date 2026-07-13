@@ -1,7 +1,6 @@
 // Поле новая задача
-import TodoItem from '../TodoItem/TodoItem';
 import { useContext } from 'react';
-import { TasksContext } from '../../../../entities/todo';
+import { TodoItem, TasksContext } from '@/entities/todo';
 
 const TodoList = (props) => {
   const { styles } = props;

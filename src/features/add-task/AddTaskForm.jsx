@@ -1,9 +1,9 @@
 // окно для новой задачи
 
-import Field from '../../shared/components/Field';
-import Button from '../../shared/components/Button';
+import Field from '@/shared/components/Field';
+import Button from '@/shared/components/Button';
 import { useContext, useState } from 'react';
-import { TasksContext } from '../../entities/todo';
+import { TasksContext } from '@/entities/todo';
 
 const AddTaskForm = (props) => {
   const { styles } = props;

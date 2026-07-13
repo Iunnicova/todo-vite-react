@@ -1,4 +1,4 @@
-import tasksAPI from '../../shared/api/tasks';
+import tasksAPI from '@/shared/api/tasks';
 import { useState, useEffect } from 'react';
 
 const TaskPage = (props) => {
