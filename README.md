@@ -1,9 +1,9 @@
 # React + Vite
 
-npm install
-npm run server
-npm run dev
-npx prettier --write
+- npm install
+- npm run server
+- npm run dev
+- npx prettier --write
 
 # Future Sliced Design
 
@@ -89,6 +89,7 @@ _useTasksLocalStorage.js_
 #### ul
 
 ##### _TodoItem_
+
 ##### _TodoList_
 
 ## 6. shared
