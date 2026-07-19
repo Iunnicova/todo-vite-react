@@ -1,29 +1,24 @@
 {
   "tasks": [
     {
-      "title": "1",
+      "title": "Первая",
       "isDone": false,
       "id": 1
     },
     {
-      "title": "4",
+      "title": "Вторая",
       "isDone": false,
       "id": 2
     },
     {
-      "title": "65",
+      "title": "Третья",
       "isDone": false,
       "id": 3
     },
     {
-      "title": "76",
+      "title": "<img>",
       "isDone": false,
       "id": 4
-    },
-    {
-      "title": "8",
-      "isDone": false,
-      "id": 5
     }
   ]
 }

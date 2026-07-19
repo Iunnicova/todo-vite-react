@@ -1,6 +1,6 @@
 //!управление задачами
 //кладем в контекст список задач, ссылки на элементы Ref, функции обработчики
-import { useMemo } from 'react'
+import { useMemo } from 'react';
 import { createContext } from 'react';
 import useTasks from './useTasks';
 import useIncompleteTasks from './useIncompleteTasks';
@@ -29,43 +29,44 @@ export const TasksProvider = (props) => {
   const { firstIncompleteTaskRef, firstIncompleteTaskId } =
     useIncompleteTasks(tasks);
 
-  const value = useMemo(() => ({
-    tasks,
-    filteredTasks,
-    deleteTask,
-    deleteAllTasks,
-    toggleTaskComplete,
-    newTaskTitle,
-    setNewTaskTitle,
-    searchQuery,
-    setSearchQuery,
-    newTaskInputRef,
-    addTask,
-    disappearingTaskId,
-    appearingTaskId,
-    firstIncompleteTaskRef,
-    firstIncompleteTaskId,
-  }), [
-    tasks,
-    filteredTasks,
-    deleteTask,
-    deleteAllTasks,
-    toggleTaskComplete,
-    newTaskTitle,
-    setNewTaskTitle,
-    searchQuery,
-    setSearchQuery,
-    newTaskInputRef,
-    addTask,
-    disappearingTaskId,
-    appearingTaskId,
-    firstIncompleteTaskRef,
-    firstIncompleteTaskId,
-  ])
+  const value = useMemo(
+    () => ({
+      tasks,
+      filteredTasks,
+      deleteTask,
+      deleteAllTasks,
+      toggleTaskComplete,
+      newTaskTitle,
+      setNewTaskTitle,
+      searchQuery,
+      setSearchQuery,
+      newTaskInputRef,
+      addTask,
+      disappearingTaskId,
+      appearingTaskId,
+      firstIncompleteTaskRef,
+      firstIncompleteTaskId,
+    }),
+    [
+      tasks,
+      filteredTasks,
+      deleteTask,
+      deleteAllTasks,
+      toggleTaskComplete,
+      newTaskTitle,
+      setNewTaskTitle,
+      searchQuery,
+      setSearchQuery,
+      newTaskInputRef,
+      addTask,
+      disappearingTaskId,
+      appearingTaskId,
+      firstIncompleteTaskRef,
+      firstIncompleteTaskId,
+    ]
+  );
 
   return (
-    <TasksContext.Provider value={value}>
-      {children}
-    </TasksContext.Provider>
+    <TasksContext.Provider value={value}>{children}</TasksContext.Provider>
   );
 };

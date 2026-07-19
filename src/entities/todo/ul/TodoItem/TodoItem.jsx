@@ -4,6 +4,7 @@ import RouterLink from '@/shared/components/RouterLink';
 import { TasksContext } from '@/entities/todo';
 
 import styles from './TodoItem.module.scss';
+import { highlightCaseInsensitive } from '@/shared/utils/highlight';
 
 const TodoItem = (props) => {
   const {
@@ -20,7 +21,16 @@ const TodoItem = (props) => {
     toggleTaskComplete,
     disappearingTaskId,
     appearingTaskId,
+    searchQuery,
   } = useContext(TasksContext);
+
+  //! поиск в обоих регистрах(совпавшие буквы подсвечиваются) проверка на длину поиска
+  // const highlightedTitle = searchQuery.length > 0 ? title.replaceAll(
+  //   new RegExp(searchQuery, 'gi'),
+  //   `<mark>$&</mark>`
+  // ) : title
+
+  const highlightedTitle = highlightCaseInsensitive(title, searchQuery);
 
   return (
     //! добавление и удаляемая задача плавно уходит наверх и становится прозрачной а нижнии элементы подтягиваются на верх
@@ -51,7 +61,10 @@ const TodoItem = (props) => {
         to={`/tasks/${id}`}
         aria-label="Task detail page/Страница сведений о задаче"
       >
-        {title}
+        {/* {title} */}
+
+        {/* dangerouslySetInnerHTML обход защиты REACT для вывода сырого текста в дом дерево без предварительной обработки в поле ввода вводим <img src="x" onerror ="alert(1)">*/}
+        <span dangerouslySetInnerHTML={{ __html: highlightedTitle }} />
       </RouterLink>
       <button
         className={styles.deleteButton}
