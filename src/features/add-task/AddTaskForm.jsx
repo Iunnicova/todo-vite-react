@@ -7,11 +7,13 @@ import { TasksContext } from '@/entities/todo';
 
 const AddTaskForm = (props) => {
   const { styles } = props;
+
+  //!добавляем задачи в список
+  const [newTaskTitle, setNewTaskTitle] = useState('');
+
   const {
     addTask,
     newTaskInputRef, //!добавление задачи через useRef
-    newTaskTitle, //useState добавление задачи
-    setNewTaskTitle, //useState добавление задачи
   } = useContext(TasksContext);
 
   //! выводится ошибка если пользователь вводит пробелы в задачи
@@ -26,7 +28,8 @@ const AddTaskForm = (props) => {
 
     //!проверяем что поле новая задача не пустое
     if (!isNewTaskTitleEmpty) {
-      addTask(clearNewTaskTitle); //для добавления новой задачи
+      (addTask(clearNewTaskTitle), //для добавления новой задачи
+        () => setNewTaskTitle(''));
     }
   };
 

@@ -4,6 +4,7 @@
 - npm run server
 - npm run dev
 - npx prettier --write
+- npm run build
 
 # Future Sliced Design
 

@@ -37,9 +37,6 @@ const tasksReducer = (state, action) => {
 const useTasks = () => {
   const [tasks, dispatch] = useReducer(tasksReducer, []);
 
-  //!добавляем задачи в список
-  const [newTaskTitle, setNewTaskTitle] = useState('');
-
   //!Поиск задач
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -56,7 +53,6 @@ const useTasks = () => {
   //!удалить все задачи
   // **оборачиваем в useCallback что бы кнопка не пересоздавалась каждый раз заново**
   const deleteAllTasks = useCallback(() => {
-    //спрашиваем действительно ли пользователь хочет удалить все задачи разом
     const isConfirmed = confirm('Вы уверены, что хотите удалить все?');
 
     //если пользователь подтвердит что хочет удалить все задачи то..
@@ -85,16 +81,16 @@ const useTasks = () => {
   }, []);
 
   //! добавление новая задача и добавлялась при нажатии на ENTER
-  const addTask = useCallback((title) => {
+  const addTask = useCallback((title, callbackAfterAdding) => {
     const newTask = {
       title,
       isDone: false,
     };
-    // из tasksAPI
+
     tasksAPI.add(newTask).then((addedTask) => {
       //* добавляем к старым задачам новую
       dispatch({ type: 'ADD', task: addedTask }); // колбек дает доступ к актуальному на момент срабатывания setTasks состоянию, prevTasks-предыдущее состояние
-      setNewTaskTitle(''); // Очищаем поле ввода
+      callbackAfterAdding();
       setSearchQuery(''); //сброс поля поиска. если в поле поиска написан текст и пользователь переключился на ввод новой задачи после добавления новая задача добавится
       newTaskInputRef.current.focus(); //FOCUS при заполнении поля
       setAppearingTaskId(addedTask.id); //анимация добавления задачи
@@ -137,8 +133,6 @@ const useTasks = () => {
     deleteTask,
     deleteAllTasks,
     toggleTaskComplete,
-    newTaskTitle,
-    setNewTaskTitle,
     searchQuery,
     setSearchQuery,
     newTaskInputRef,
