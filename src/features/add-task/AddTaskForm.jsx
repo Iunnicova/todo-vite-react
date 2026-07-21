@@ -28,8 +28,10 @@ const AddTaskForm = (props) => {
 
     //!проверяем что поле новая задача не пустое
     if (!isNewTaskTitleEmpty) {
-      (addTask(clearNewTaskTitle), //для добавления новой задачи
-        () => setNewTaskTitle(''));
+      addTask(
+        clearNewTaskTitle, //для добавления новой задачи
+        () => setNewTaskTitle('')
+      );
     }
   };
 

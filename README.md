@@ -6,6 +6,10 @@
 - npx prettier --write
 - npm run build
 
+###### посмотреть результат сборки продакшен сборки (пользователь)
+
+- npm run preview
+
 # Future Sliced Design
 
 ## 1. app
@@ -105,6 +109,9 @@ _useTasksLocalStorage.js_
 
 ##### _tasks_
 
+_local.js_
+_server.js_
+
 ### assets
 
 ##### _icons_
@@ -120,3 +127,7 @@ _useTasksLocalStorage.js_
 ### hooks
 
 _useCombinedRefs.js_
+
+### utils
+
+_highlight.js_
