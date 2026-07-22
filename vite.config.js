@@ -2,30 +2,27 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { fileURLToPath, URL } from 'node:url';
 
-export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+// для деплоя
+
+export default defineConfig(({ mode }) => {
+  const isProd = mode === 'production';
+
+  return {
+    base: isProd ? '/todo-vite-react/' : '/',
+    plugins: [react()],
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./src', import.meta.url)),
+      },
     },
-  },
+  };
 });
 
-// import { defineConfig as viteConfig } from 'vite'; // Импортируем как viteConfig
-// import react from '@vitejs/plugin-react';
-// import path from 'path';
-// import { fileURLToPath } from 'url';
-// import { dirname } from 'path';
-
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = dirname(__filename);
-
-// export default viteConfig({
-//   // Используем новое имя
+// export default defineConfig({
 //   plugins: [react()],
 //   resolve: {
 //     alias: {
-//       '@': path.resolve(__dirname, './src'),
+//       '@': fileURLToPath(new URL('./src', import.meta.url)),
 //     },
 //   },
 // });

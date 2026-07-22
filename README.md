@@ -3,12 +3,51 @@
 - npm install
 - npm run server
 - npm run dev
-- npx prettier --write
+
+##### сборка
+
 - npm run build
 
-###### посмотреть результат сборки продакшен сборки (пользователь)
+##### форматирование
+
+- npx prettier --write
+
+##### посмотреть результат продакшен сборки (пользователь)
 
 - npm run preview
+
+##### пакеты для деплоя
+
+- npm i -D gh-pages cpy-cli npm-run-all
+  ! в package.json вносим новые команды
+  - "scripts": {
+  - "copy404": "cpy dist/index.html dist --rename=404.html --flat",
+
+  ```
+  "copy404" - в папке дист автоматически продублировать индекс HTML для 404 страницы,
+   чтобы редирукты в финальном приложении  отрабатывали корректно
+   и вели на нашу собственную версию  страницы 404
+  ```
+
+  - "predeploy": "run-s build copy404",
+
+  ```
+  "predeploy" команда предеплой что-бы не забывать билдеть проект и вызвать команду копи 404
+  ```
+
+  - "deploy": "gh-pages -d dist"
+
+  ```
+  Diploy содержимое папки dist на GitHub Pages
+  ```
+
+  },
+
+  ##### Diploy
+
+  npm run deploy
+
+  ***
 
 # Future Sliced Design
 
@@ -127,6 +166,10 @@ _server.js_
 ### hooks
 
 _useCombinedRefs.js_
+
+### constants
+
+_index.js_
 
 ### utils
 
