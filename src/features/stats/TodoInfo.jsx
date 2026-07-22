@@ -20,8 +20,7 @@ const TodoInfo = (props) => {
   return (
     <div className={styles.info}>
       <div className={styles.totalTasks}>
-        {/* Количество задач: 
-        <span> 0</span> */}
+        {/* Количество задач*/}
         Сделано {done} из {total}
       </div>
       {/* Кнопку будет появлятся только если есть задачи */}

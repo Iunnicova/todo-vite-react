@@ -11,14 +11,6 @@ const App = () => {
     '*': () => <div>404 Page not Found / 404 Страница не найдена</div>,
   };
 
-  return (
-    //!перенесли в TasksPage
-    // <TasksProvider>
-    //   <Todo />
-    // </TasksProvider>
-
-    //!заменяем на роутер который будет переключать страницы
-    <Router routes={routes} />
-  );
+  return <Router routes={routes} />;
 };
 export default App;

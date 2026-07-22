@@ -1,11 +1,9 @@
 //!управление задачами
 //кладем в контекст список задач, ссылки на элементы Ref, функции обработчики
 import { useMemo } from 'react';
-import { createContext } from 'react';
 import useTasks from './useTasks';
 import useIncompleteTasks from './useIncompleteTasks';
-
-export const TasksContext = createContext({});
+import { TasksContext } from './TasksContext';
 
 export const TasksProvider = (props) => {
   const { children } = props;

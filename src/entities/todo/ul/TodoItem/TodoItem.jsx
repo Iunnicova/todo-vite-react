@@ -24,12 +24,6 @@ const TodoItem = (props) => {
     searchQuery,
   } = useContext(TasksContext);
 
-  //! поиск в обоих регистрах(совпавшие буквы подсвечиваются) проверка на длину поиска
-  // const highlightedTitle = searchQuery.length > 0 ? title.replaceAll(
-  //   new RegExp(searchQuery, 'gi'),
-  //   `<mark>$&</mark>`
-  // ) : title
-
   const highlightedTitle = highlightCaseInsensitive(title, searchQuery);
 
   return (
@@ -49,7 +43,6 @@ const TodoItem = (props) => {
         id={id}
         type="checkbox"
         checked={isDone}
-        // readOnly //нельзя изменить текст в input
         onChange={({ target }) => {
           toggleTaskComplete(id, target.checked);
         }} //добавление удаление галочки
@@ -61,8 +54,6 @@ const TodoItem = (props) => {
         to={`tasks/${id}`}
         aria-label="Task detail page/Страница сведений о задаче"
       >
-        {/* {title} */}
-
         {/* dangerouslySetInnerHTML обход защиты REACT для вывода сырого текста в дом дерево без предварительной обработки в поле ввода вводим <img src="x" onerror ="alert(1)">*/}
         <span dangerouslySetInnerHTML={{ __html: highlightedTitle }} />
       </RouterLink>

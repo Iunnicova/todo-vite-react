@@ -121,12 +121,6 @@ const useTasks = () => {
       : null;
   }, [searchQuery, tasks]); //данные от которых зависят внутренние вычисления
 
-  //! число выполненных задач(перенесли в TodoInfo переименовали в done)
-  // const doneTasks = useMemo(() => {
-  //   return tasks.filter(({ isDone }) => isDone)
-  //     .length;
-  // }, [tasks]);
-
   return {
     tasks,
     filteredTasks,

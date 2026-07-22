@@ -59,7 +59,6 @@ const AddTaskForm = (props) => {
       <Button
         type="submit"
         isDisabled={isNewTaskTitleEmpty} //не нажимается кнопка новая задача пока пустое поле
-        // isDisabled={newTaskTitle.trim().length === 0}  //не нажимается кнопка новая задача пока пустое поле
       >
         Добавить
       </Button>

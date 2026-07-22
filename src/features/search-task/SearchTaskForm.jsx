@@ -6,11 +6,7 @@ import { TasksContext } from '@/entities/todo';
 
 const SearchTaskForm = (props) => {
   const { styles } = props;
-  const {
-    // onSearchInput
-    searchQuery,
-    setSearchQuery,
-  } = useContext(TasksContext);
+  const { searchQuery, setSearchQuery } = useContext(TasksContext);
 
   return (
     <form
@@ -23,8 +19,6 @@ const SearchTaskForm = (props) => {
         id="search-task"
         type="search"
         value={searchQuery}
-        // onInput={(event) =>
-        //   onSearchInput(event.target.value)
         onInput={(event) => setSearchQuery(event.target.value)}
       />
     </form>
